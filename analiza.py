@@ -41,10 +41,10 @@ from pyspark.ml.evaluation import ClusteringEvaluator
 
 import json
 
-conf = SparkConf()
-conf.setMaster('spark://172.17.0.2:7077')
-
-sc = SparkContext('spark://172.17.0.2:7077')
+# conf = SparkConf()
+# conf.setMaster('spark://172.17.0.2:7077')
+# 'spark://172.17.0.2:7077'
+sc = SparkContext()
 spark = SparkSession(sc)
 
 spark.sparkContext.setLogLevel("ERROR")

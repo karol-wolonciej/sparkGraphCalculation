@@ -8,6 +8,16 @@ from pyspark.sql.session import SparkSession
 
 from pyspark.conf import SparkConf
 
+from pyspark.ml.feature import *
+from pyspark.ml.clustering import KMeans
+from pyspark.ml.evaluation import ClusteringEvaluator
+from pyspark.ml import Pipeline
+
+from pyspark import Row
+from pyspark.context import SparkContext
+from pyspark.sql.session import SparkSession
+# from pyspark import SparkConf
+
 from numpy import array
 from math import sqrt
 import matplotlib.pyplot as plt
@@ -21,15 +31,7 @@ from scipy.stats import genextreme
 
 # from pyspark.mllib.clustering import KMeans, KMeansModel
 
-from pyspark.ml.feature import *
-from pyspark.ml.clustering import KMeans
-from pyspark.ml.evaluation import ClusteringEvaluator
-from pyspark.ml import Pipeline
 
-from pyspark import Row
-from pyspark.context import SparkContext
-from pyspark.sql.session import SparkSession
-from pyspark import SparkConf
 
 import functools
 from functools import partial

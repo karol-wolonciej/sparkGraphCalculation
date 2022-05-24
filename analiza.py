@@ -2,12 +2,6 @@ from __future__ import division
 from distutils import core
 
 
-'''
-spark-submit \
---master spark://172.17.0.2:7077 \
---properties-file "spark.conf"
-analiza.py
-'''
 
 from pyspark.context import SparkContext
 from pyspark.sql.session import SparkSession

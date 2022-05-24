@@ -4,3 +4,4 @@
 !.gitignore
 !analiza.py
 !spark.conf
+!sparkSubmit.sh

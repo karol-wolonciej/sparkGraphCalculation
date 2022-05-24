@@ -1,9 +1,27 @@
+from __future__ import division
+
+
+'''
+spark-submit \
+--master spark://172.17.0.2:7077 \
+--supervise \
+--executor-memory 5G \
+--executor-cores 8 \
+--total-executor-cores 100 \
+--num-executors 4 \
+analiza.py
+'''
+
+from pyspark.context import SparkContext
+from pyspark.sql.session import SparkSession
+
+from pyspark.conf import SparkConf
+
 from numpy import array
 from math import sqrt
 import matplotlib.pyplot as plt
 import matplotlib
 import io
-from __future__ import division
 import numpy as np
 from numpy import random
 from scipy.spatial.distance import pdist, cdist
@@ -30,9 +48,23 @@ from pyspark.ml.evaluation import ClusteringEvaluator
 
 import json
 
+conf = SparkConf()
+conf.setMaster('spark://172.17.0.2:7077')
+
+sc = SparkContext('spark://172.17.0.2:7077')
+spark = SparkSession(sc)
+
+spark.sparkContext.setLogLevel("ERROR")
 
 
+nazwaAplikacji = "nazwaAplikacji"
 
+
+spark.app.name = "nazwa aplikacji"
+spark.driver.cores = 
+
+
+# spark.zos.master.app.alwaysScheduleApps=True
 
 def plot_dataset(set_):
     x_l = set_.map(lambda pair: pair[0]).collect()
@@ -41,7 +73,7 @@ def plot_dataset(set_):
     plt.figure()
     plt.scatter(x_l, y_l, s = 0.1)
     plt.show()
-    z.show(plt)
+    # z.show(plt)
     plt.close()
 
 
@@ -244,7 +276,7 @@ def calculateSihouette(k, iniMode, maxIter, distMeasure, set_name):
     
 def calculateClustersSplit(k, iniMode, maxIter, distMeasure, set_name):
     param_dict = models_dict[k][iniMode][maxIter][distMeasure][set_name]
-     
+    kmeans_model = param_dict[kmean_model]
     param_dict[clustersSplit] = {}
 
     for i in range(k):
@@ -308,7 +340,7 @@ operate_on_parameters_and_models(calculateSihouette)
 operate_on_parameters_and_models(calculateClustersSplit)
 
 
-operate_on_parameters_and_models(plotClusters)
+# operate_on_parameters_and_models(plotClusters)
 
 
 

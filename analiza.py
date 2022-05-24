@@ -41,9 +41,7 @@ from pyspark.ml.evaluation import ClusteringEvaluator
 
 import json
 
-# conf = SparkConf()
-# conf.setMaster('spark://172.17.0.2:7077')
-# 'spark://172.17.0.2:7077'
+
 sc = SparkContext()
 spark = SparkSession(sc)
 
@@ -147,7 +145,9 @@ set1_points = tr_data.sample(withReplacement=False, fraction=half)
 set2_points = tr_data.subtract(set1_points)
 
 
-assemble=VectorAssembler(inputCols=['X', 'Y'], outputCol = 'before_scaling_features')
+
+
+assemble = VectorAssembler(inputCols=['X', 'Y'], outputCol = 'before_scaling_features')
 scaler = StandardScaler(inputCol='before_scaling_features', outputCol='features')
 
 data_transformation_pipeline = Pipeline(stages= [assemble, scaler]) #wyrzucilem scaler

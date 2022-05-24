@@ -1,14 +1,11 @@
 from __future__ import division
+from distutils import core
 
 
 '''
 spark-submit \
 --master spark://172.17.0.2:7077 \
---supervise \
---executor-memory 5G \
---executor-cores 8 \
---total-executor-cores 100 \
---num-executors 4 \
+--properties-file "spark.conf"
 analiza.py
 '''
 
@@ -56,12 +53,6 @@ spark = SparkSession(sc)
 
 spark.sparkContext.setLogLevel("ERROR")
 
-
-nazwaAplikacji = "nazwaAplikacji"
-
-
-spark.app.name = "nazwa aplikacji"
-spark.driver.cores = 
 
 
 # spark.zos.master.app.alwaysScheduleApps=True

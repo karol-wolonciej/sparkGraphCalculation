@@ -1,18 +1,13 @@
 from __future__ import division
 from distutils import core
 
-
-
 from pyspark.context import SparkContext
 from pyspark.sql.session import SparkSession
-
 from pyspark.conf import SparkConf
-
 from pyspark.ml.feature import *
 from pyspark.ml.clustering import KMeans
 from pyspark.ml.evaluation import ClusteringEvaluator
 from pyspark.ml import Pipeline
-
 from pyspark import Row
 from pyspark.context import SparkContext
 from pyspark.sql.session import SparkSession

@@ -53,7 +53,7 @@ def operate_dictionary(f_all, g, models_dict):
 
 # foo pierwotnie bralo wszystko ale tu bierze juz tylko set_name
 def operate_on_parameters(foo, models_dict):
-    operate_dictionary(foo, lambda f: f(), models_dict)
+    operate_dictionary(foo, lambda f, md: f(md), models_dict)
 
 
 def operate_on_models(foo, models_dict):

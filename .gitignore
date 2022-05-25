@@ -3,6 +3,7 @@
 !.gitignore
 
 !analiza.py
+!oblicz.py
 !keywords.py
 !functionalLib.py
 !models_dict_calculations.py

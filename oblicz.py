@@ -27,7 +27,6 @@ from KStest import ks2d2s, ks2d2s_2d_points
 
 sc = SparkContext()
 spark = SparkSession(sc)
-spark.sparkContext.setLogLevel('ERROR')
 
 model_dict_file = open('/home/karol/pdd/duzeZadanie2/grafy/parameters.json')
 
@@ -38,13 +37,17 @@ models_dict[sparkContext] = sc
 model_dict_file.close()
 
 ratioOfInputPoints = models_dict[parametersDict][ratioOfInputPoints]
+dataset_path = models_dict[parametersDict][dataset_path_key]
+logLevel = models_dict[parametersDict][logLevel_key]
 
-df = spark.read.text('/home/karol/pdd/duzeZadanie2/grafy/birch3.txt')
+spark.sparkContext.setLogLevel(logLevel)
+
+df = spark.read.text(dataset_path)
 
 td = df.rdd
 tr_data = td.map(lambda line: line[0].split()) \
             .map(lambda line: Row(X=int(line[0]), Y=int(line[1]))) \
-            .toDF().sort('X', 'Y') \
+            .toDF().sort(X, Y) \
             .sample(withReplacement=False, fraction=ratioOfInputPoints) \
             .cache()
 
@@ -57,13 +60,7 @@ set2_points = tr_data.subtract(set1_points).cache()
 
 
 p = [(row[X], row[Y]) for row in set1_points.collect()]
-# print(p)
-# print("dlugosc \n\n\n")
 
-# print(len(p))
-# print(len(set1_points.collect()))
-
-# pipeliness
 assemble = VectorAssembler(inputCols=[X,  Y], outputCol = 'before_scaling_features')
 scaler = StandardScaler(inputCol='before_scaling_features', outputCol='features')
 data_transformation_pipeline = Pipeline(stages= [assemble, scaler])
@@ -96,8 +93,8 @@ operate_on_parameters_and_models(deleteModelsAndDataframes, models_dict)
 
 
 
-# del models_dict[sparkContext]
-# del models_dict[points_sets]
+del models_dict[sparkContext]
+del models_dict[points_sets]
 
 
 # with open('saved_models_dict.pkl', 'wb') as f:

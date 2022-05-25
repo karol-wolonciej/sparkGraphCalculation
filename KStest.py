@@ -3,20 +3,19 @@ from scipy.spatial.distance import pdist, cdist
 from scipy.stats import kstwobign, pearsonr, genextreme
 import random
 
+from auxiliary import *
+
+
 __all__ = ['ks2d2s', 'estat', 'estat2d']
 
 
-def ks2d2s_2d_points(points_set1, points_set2):
-    pos = { 'x' : 0, 'y' : 1 }
-    
-    get_arr = lambda coordinate, points: np.array([point[coordinate] for point in points])
-    
-    params = [(pos['x'], points_set1), 
-              (pos['y'], points_set1),
-              (pos['x'], points_set2),
-              (pos['y'], points_set2)]
 
-    x1, y1, x2, y2 = [get_arr(coordinate, point) for (coordinate, point) in params]
+
+
+def ks2d2s_2d_points(points_set1, points_set2):
+
+    x1, y1 = getArraysFromTupleList(points_set1)
+    x2, y2 = getArraysFromTupleList(points_set2)
 
     return ks2d2s(x1, y1, x2, y2)
 

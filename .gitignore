@@ -8,6 +8,7 @@
 !functionalLib.py
 !models_dict_calculations.py
 !KStest.py
+!auxiliary.py
 
 !spark.conf
 !sparkSubmit.sh

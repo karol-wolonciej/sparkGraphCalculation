@@ -2,7 +2,7 @@ import pickle
 import matplotlib.pyplot as plt
 import numpy as np
 
-model_dict_path = "/home/karol/pdd/duzeZadanie2/grafy/resultDictionary.pkl"
+model_dict_path = "/home/karol/pdd/duzeZadanie2/grafy/resTest.pkl"
 
 
 with open(model_dict_path, 'rb') as f:
@@ -12,7 +12,7 @@ with open(model_dict_path, 'rb') as f:
 
 
 #Getting unique labels
-n = 60
+n = 30
  
 u_labels = np.unique(n)
  
@@ -21,10 +21,50 @@ u_labels = np.unique(n)
 cluster_split = model_dict[n]['random'][10]['euclidean']['set2']['clustersSplit']
 
 
+def plotSubplot(plt_def, s_x, s_y, t_number):
+    plt.subplot(s_x, s_y, t_number)
+    plt_def()
+
+def plotCluster(clusterSplit):
+
+    
+
+
 for i in range(n):
     x = np.array([cor[0] for cor in cluster_split[i]])
     y = np.array([cor[1] for cor in cluster_split[i]])
     plt.scatter(x , y , label = i)
 plt.legend()
 plt.show()
+
+
+
+x = np.array([0, 1, 2, 3])
+y = np.array([3, 8, 1, 10])
+
+plt.subplot(2, 2, 1)
+plt.plot(x,y)
+
+x = np.array([0, 1, 2, 3])
+y = np.array([10, 20, 30, 40])
+
+plt.subplot(2, 2, 2)
+plt.plot(x,y)
+
+
+x = np.array([0, 1, 2, 3])
+y = np.array([10, 20, 30, 40])
+
+plt.subplot(2, 2, 3)
+plt.plot(x,y)
+
+x = np.array([0, 1, 2, 3])
+y = np.array([3, 8, 1, 10])
+
+plt.subplot(2, 2, 4)
+plt.plot(x,y)
+
+
+
+plt.show() 
 

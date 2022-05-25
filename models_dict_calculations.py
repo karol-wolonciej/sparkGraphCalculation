@@ -60,7 +60,7 @@ def operate_on_models(foo, models_dict):
     for set_name in ['set1', 'set2']:
         foo(set_name, models_dict)
         
-        
+
 def operate_on_parameters_and_models(foo, models_dict):
     operate_dictionary(foo, operate_on_models, models_dict)
 
@@ -138,7 +138,7 @@ def calculateClustersSplit(k, iniMode, maxIter, distMeasure, set_name, models_di
     
     for pointVector in points:
         clusterCenter = kmeans_model.predict(pointVector)
-        param_dict[clustersSplit][clusterCenter].append(pointVector)
+        param_dict[clustersSplit][clusterCenter].append(tuple([round(val, 2) for val in pointVector.toArray()]))
 
 
 def printLastParam(paramKey, k, iniMode, maxIter, distMeasure, set_name, models_dict):
@@ -153,6 +153,12 @@ printSilhouette = partial(printLastParam, silhouette)
 def plotClusters(k, iniMode, maxIter, distMeasure, set_name, models_dict):
     clusters = models_dict[k][iniMode][maxIter][distMeasure][set_name][clustersSplit]
     plot_clusters(k, clusters)
+
+
+def deleteModelsAndDataframes(k, iniMode, maxIter, distMeasure, set_name, models_dict):
+    del models_dict[k][iniMode][maxIter][distMeasure][set_name][kmean_model]
+    del models_dict[k][iniMode][maxIter][distMeasure][set_name][kmean_instance]
+
 
 
 def calculateKStest(k, iniMode, maxIter, distMeasure, models_dict):

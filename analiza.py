@@ -14,7 +14,7 @@ import numpy as np
 import json
 from math import sqrt
 from functools import partial
-
+import pickle
 
 from plots import *
 from models_dict_calculations import *
@@ -71,9 +71,19 @@ initialize_model_dict(models_dict)
 operate_on_parameters_and_models(createKMeansObjects, models_dict)
 operate_on_parameters_and_models(fitModels, models_dict)
 operate_on_parameters_and_models(calculatePointsForTest, models_dict)
-operate_on_parameters_and_models(calculateMeanSquareErrorDF, models_dict)
+operate_on_parameters_and_models(calculateMeanSquareError, models_dict)
 operate_on_parameters_and_models(calculateSihouette, models_dict)
 operate_on_parameters_and_models(calculateClustersSplit, models_dict)
+operate_on_parameters_and_models(deleteModelsAndDataframes, models_dict)
 
-operate_on_parameters_and_models(printMSE, models_dict)
-operate_on_parameters_and_models(printSilhouette, models_dict)
+
+
+
+
+
+del models_dict[sparkContext]
+del models_dict[points_sets]
+
+
+with open('saved_models_dict.pkl', 'wb') as f:
+    pickle.dump(models_dict, f)

@@ -52,38 +52,48 @@ half = 0.5
 set1_points = tr_data.sample(withReplacement=False, fraction=half).cache()
 set2_points = tr_data.subtract(set1_points).cache()
 
-# pipeliness
-assemble = VectorAssembler(inputCols=[X,  Y], outputCol = 'before_scaling_features')
-scaler = StandardScaler(inputCol='before_scaling_features', outputCol='features')
-data_transformation_pipeline = Pipeline(stages= [assemble, scaler])
-
-
-transformed_data_model = data_transformation_pipeline.fit(tr_data)
-transformed_data_set1 = transformed_data_model.transform(set1_points).cache()
-transformed_data_set2 = transformed_data_model.transform(set2_points).cache()
-
-
-models_dict[points_sets] = { set1 : transformed_data_set1, set2 : transformed_data_set2 }
-
-
-initialize_model_dict(models_dict)
-
-operate_on_parameters_and_models(createKMeansObjects, models_dict)
-operate_on_parameters_and_models(fitModels, models_dict)
-operate_on_parameters_and_models(calculatePointsForTest, models_dict)
-operate_on_parameters_and_models(calculateMeanSquareError, models_dict)
-operate_on_parameters_and_models(calculateSihouette, models_dict)
-operate_on_parameters_and_models(calculateClustersSplit, models_dict)
-operate_on_parameters_and_models(deleteModelsAndDataframes, models_dict)
 
 
 
+p = [(row[X], row[Y]) for row in set1_points.collect()]
+print(p)
+print("dlugosc \n\n\n")
+
+print(len(p))
+print(len(set1_points.collect()))
+
+# # pipeliness
+# assemble = VectorAssembler(inputCols=[X,  Y], outputCol = 'before_scaling_features')
+# scaler = StandardScaler(inputCol='before_scaling_features', outputCol='features')
+# data_transformation_pipeline = Pipeline(stages= [assemble, scaler])
+
+
+# transformed_data_model = data_transformation_pipeline.fit(tr_data)
+# transformed_data_set1 = transformed_data_model.transform(set1_points).cache()
+# transformed_data_set2 = transformed_data_model.transform(set2_points).cache()
+
+
+# models_dict[points_sets] = { set1 : transformed_data_set1, set2 : transformed_data_set2 }
+
+
+# initialize_model_dict(models_dict)
+
+# operate_on_parameters_and_models(createKMeansObjects, models_dict)
+# operate_on_parameters_and_models(fitModels, models_dict)
+# operate_on_parameters_and_models(calculatePointsForTest, models_dict)
+# operate_on_parameters_and_models(calculateMeanSquareError, models_dict)
+# operate_on_parameters_and_models(calculateSihouette, models_dict)
+# operate_on_parameters_and_models(calculateClustersSplit, models_dict)
+# operate_on_parameters_and_models(deleteModelsAndDataframes, models_dict)
 
 
 
-del models_dict[sparkContext]
-del models_dict[points_sets]
 
 
-with open('saved_models_dict.pkl', 'wb') as f:
-    pickle.dump(models_dict, f)
+
+# del models_dict[sparkContext]
+# del models_dict[points_sets]
+
+
+# with open('saved_models_dict.pkl', 'wb') as f:
+#     pickle.dump(models_dict, f)

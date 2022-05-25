@@ -28,14 +28,15 @@ sc = SparkContext()
 spark = SparkSession(sc)
 spark.sparkContext.setLogLevel('ERROR')
 
-f = open('/home/karol/pdd/duzeZadanie2/grafy/parameters.json')
-parameters = json.load(f)
-f.close()
-
-ratioOfInputPoints = parameters['ratioOfInputPoints']
+model_dict_file = open('/home/karol/pdd/duzeZadanie2/grafy/parameters.json')
 
 models_dict = {}
-models_dict['parameters'] = parameters
+models_dict[parametersDict] = json.load(model_dict_file)
+models_dict[sparkContext] = sc
+
+model_dict_file.close()
+
+ratioOfInputPoints = models_dict[parametersDict][ratioOfInputPoints]
 
 df = spark.read.text('/home/karol/pdd/duzeZadanie2/grafy/birch3.txt')
 
@@ -65,14 +66,14 @@ transformed_data_set2 = transformed_data_model.transform(set2_points).cache()
 models_dict[points_sets] = { set1 : transformed_data_set1, set2 : transformed_data_set2 }
 
 
-initialize_model_dict(parameters, models_dict)
+initialize_model_dict(models_dict)
 
-operate_on_parameters_and_models(createKMeansObjects, parameters, models_dict)
-operate_on_parameters_and_models(fitModels, parameters, models_dict)
-operate_on_parameters_and_models(calculatePointsForTest, parameters, models_dict)
-operate_on_parameters_and_models(calculateMeanSquareError, parameters, models_dict)
-operate_on_parameters_and_models(calculateSihouette, parameters, models_dict)
-operate_on_parameters_and_models(calculateClustersSplit, parameters, models_dict)
+operate_on_parameters_and_models(createKMeansObjects, models_dict)
+operate_on_parameters_and_models(fitModels, models_dict)
+operate_on_parameters_and_models(calculatePointsForTest, models_dict)
+operate_on_parameters_and_models(calculateMeanSquareErrorDF, models_dict)
+operate_on_parameters_and_models(calculateSihouette, models_dict)
+operate_on_parameters_and_models(calculateClustersSplit, models_dict)
 
-operate_on_parameters_and_models(printMSE, parameters, models_dict)
-operate_on_parameters_and_models(printSilhouette, parameters, models_dict)
+operate_on_parameters_and_models(printMSE, models_dict)
+operate_on_parameters_and_models(printSilhouette, models_dict)

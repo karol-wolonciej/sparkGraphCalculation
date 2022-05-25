@@ -22,7 +22,8 @@ from keywords import *
 
 
 
-def initialize_model_dict(parameters, models_dict):
+def initialize_model_dict(models_dict):
+    parameters = models_dict[parametersDict]
     for k in parameters['k_set']:
         models_dict[k] = {}
         
@@ -40,7 +41,8 @@ def initialize_model_dict(parameters, models_dict):
 
 
 # foo bierze wszystkie parametry i byc moze wiecej
-def operate_dictionary(f_all, g, parameters, models_dict):
+def operate_dictionary(f_all, g, models_dict):
+    parameters = models_dict[parametersDict]
     for k in parameters['k_set']:
         for iniMode in parameters['initializationMode']:
             for maxIter in parameters['maxIterations']:
@@ -50,22 +52,22 @@ def operate_dictionary(f_all, g, parameters, models_dict):
 
 
 # foo pierwotnie bralo wszystko ale tu bierze juz tylko set_name 
-def operate_on_parameters(foo, parameters, models_dict):
-    operate_dictionary(foo, lambda f: f(), parameters, models_dict)
+def operate_on_parameters(foo, models_dict):
+    operate_dictionary(foo, lambda f: f(), models_dict)
     
 
 def operate_on_models(foo, models_dict):
     for set_name in ['set1', 'set2']:
         foo(set_name, models_dict)
         
-def operate_on_parameters_and_models(foo, parameters, models_dict):
-    operate_dictionary(foo, operate_on_models, parameters, models_dict)
+def operate_on_parameters_and_models(foo, models_dict):
+    operate_dictionary(foo, operate_on_models, models_dict)
 
 
 
 # create KMeans objects
 def createKMeansObjects(k, iniMode, maxIter, distMeasure, set_name, models_dict):
-    parameters = models_dict['parameters']
+    parameters = models_dict[parametersDict]
     models_dict[k][iniMode][maxIter][distMeasure][set_name][kmean_instance] = KMeans(featuresCol='features',
                                                                                      predictionCol='prediction',
                                                                                      k=k,
@@ -108,12 +110,38 @@ def calculateMeanSquareError(k, iniMode, maxIter, distMeasure, set_name, models_
     
     getDist = lambda p1, p2: sqrt((p1[0] - p2[0])**2 + (p1[1] - p2[1])**2)
     
-    
     # kmeans_model.predict(pointVector)
     MSE = sum([sqrt(getDist(pointVector, clustersCenters[kmeans_model.predict(pointVector)])) for pointVector in pointsVectors]) / len(pointsVectors)
     
     param_dict[mse] = MSE
     
+def calculateMeanSquareErrorDF(k, iniMode, maxIter, distMeasure, set_name, models_dict):
+    sc = models_dict[sparkContext]
+    param_dict = models_dict[k][iniMode][maxIter][distMeasure][set_name]
+    kmeans_model = param_dict[kmean_model]
+    
+    pointsVectorsDF = [row[0] for row in models_dict[points_sets][set_name]]
+
+    # print(pointsVectorsDF)
+    
+    clustersCenters = [tuple(center) for center in kmeans_model.clusterCenters()]
+
+    clustersCentersBroadcast = sc.broadcast(clustersCenters)
+    # kmeans_model_Broadcast = sc.broadcast(kmeans_model)
+
+
+    print(kmeans_model.select(getPredictionCol()).take(1000))
+    
+    # getDist = lambda p1, p2: sqrt((p1[0] - p2[0])**2 + (p1[1] - p2[1])**2)
+    
+    
+    # # kmeans_model.predict(pointVector)
+    # MSE = sum([sqrt(getDist(pointVector, clustersCenters[kmeans_model.predict(pointVector)])) for pointVector in pointsVectors]) / len(pointsVectors)
+    
+    # param_dict[mse] = MSE
+
+
+
 
 def calculateSihouette(k, iniMode, maxIter, distMeasure, set_name, models_dict):
     param_dict = models_dict[k][iniMode][maxIter][distMeasure][set_name]

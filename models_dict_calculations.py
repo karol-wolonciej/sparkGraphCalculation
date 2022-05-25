@@ -61,7 +61,7 @@ def operate_on_models(foo, models_dict):
         foo(set_name, models_dict)
 
 
-def operate_on_parameters_and_models(foo, models_dict):
+def operate_on_parameters_and_sets(foo, models_dict):
     operate_dictionary(foo, operate_on_models, models_dict)
 
 

@@ -30,9 +30,9 @@ spark = SparkSession(sc)
 
 path_to_parameters = sys.argv[1]
 
-model_dict_file = open(path_to_parameters)
-parameters = json.load(model_dict_file)
-model_dict_file.close()
+parameters_file = open(path_to_parameters)
+parameters = json.load(parameters_file)
+parameters_file.close()
 
 
 models_dict = {}

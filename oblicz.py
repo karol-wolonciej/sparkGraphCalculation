@@ -82,12 +82,18 @@ initialize_model_dict(models_dict)
 operateParametersWithSets = partial(operate_on_parameters_and_sets, models_dict=models_dict)
 operateParametersOnly = partial(operate_on_parameters, models_dict=models_dict)
 
+gatherMSE = partial(gatherData, dataKey=mse)
+gatherSilhouette = partial(gatherData, dataKey=silhouette)
+
 operateParametersWithSets(createKMeansObjects)
 operateParametersWithSets(fitModels)
 operateParametersWithSets(calculatePointsForTest)
 operateParametersWithSets(calculateMeanSquareError)
 operateParametersWithSets(calculateSihouette)
 operateParametersWithSets(calculateClustersSplit)
+operateParametersWithSets(gatherMSE)
+operateParametersWithSets(gatherSilhouette)
+
 operateParametersOnly(calculateKStest)
 operateParametersWithSets(deleteModelsAndDataframes)
 

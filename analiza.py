@@ -9,7 +9,7 @@ import json
 
 
 
-model_dict_path = "/home/karol/pdd/duzeZadanie2/grafy/resTest.pkl"
+model_dict_path = "/home/karol/pdd/duzeZadanie2/grafy/dictTestowy.pkl"
 
 path_to_parameters = "/home/karol/pdd/duzeZadanie2/grafy/parameters.json"
 
@@ -23,10 +23,12 @@ parameters_file.close()
 
 k_list = parameters['k_set']
 
-get_tile_y = { set1 : 0, set2 : 1 }
-get_tile_x = dict(zip(k_list, range(len(k_list))))
+print(k_list)
 
+get_tile_x = { set1 : 1, set2 : 2 }
+get_tile_y = dict(zip(k_list, range(len(k_list))))
 
+print(get_tile_x)
 
 with open(model_dict_path, 'rb') as f:
     models_dict = pickle.load(f)
@@ -49,11 +51,11 @@ def plotSubplot(plt_def, s_x, s_y, t_number):
     plt_def()
 
 
-def plotCluster(clusterSplit, s_x, s_y, t_number):
-    clusterNumbers = clusterSplit.keys()
+def plotCluster(clusters, s_x, s_y, t_number):
+    clusterNumbers = clusters.keys()
     
-    for i in range(clusterNumbers):
-        x, y = getArraysFromTupleList(clusterSplit[i])
+    for i in range(len(clusterNumbers)):
+        x, y = getArraysFromTupleList(clusters[i])
         draw = lambda: plt.scatter(x , y , label = i)
         plotSubplot(draw, s_x, s_y, t_number)
 
@@ -62,14 +64,18 @@ def drawClustersFigure(k, iniMode, maxIter, distMeasure, set_name, models_dict):
     paramDict = models_dict[k][iniMode][maxIter][distMeasure][set_name]
     clusters = paramDict[clustersSplit]
     tile_number = get_tile_y[k] * 2 + get_tile_x[set_name]
-    plotCluster(clusterSplit, get_tile_x[set_name], get_tile_y[k], tile_number)
+    x_tiles = 2
+    y_tiles = len(k_list)
+    plotCluster(clusters, y_tiles, x_tiles, tile_number)
+
+
 
 
 operate_on_parameters_and_sets(drawClustersFigure, models_dict)
 plt.show()
 
 
-
+print(models_dict)
 
 # for i in range(n):
 #     x = np.array([cor[0] for cor in cluster_split[i]])

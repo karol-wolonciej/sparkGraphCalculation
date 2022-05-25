@@ -112,6 +112,21 @@ printSilhouette = partial(printLastParam, silhouette)
 #     clusters = models_dict[k][iniMode][maxIter][distMeasure][set_name][clustersSplit]
 #     plot_clusters(k, clusters)
 
+def getStringKey(*args):
+    newDataKeyword = '_'.join([str(arg) for arg in args])
+    return newDataKeyword
+
+
+def gatherData(k, iniMode, maxIter, distMeasure, set_name, models_dict, dataKey=None):
+    param_dict = models_dict[k][iniMode][maxIter][distMeasure][set_name]
+    newDataKeyword = getStringKey(iniMode, maxIter, distMeasure, set_name, dataKey)
+    newDataElement = param_dict[dataKey]
+
+    if newDataKeyword in models_dict.keys():
+        models_dict[newDataKeyword].append(newDataElement)
+    else:
+        models_dict[newDataKeyword] = [newDataElement]
+
 
 def deleteModelsAndDataframes(k, iniMode, maxIter, distMeasure, set_name, models_dict):
     del models_dict[k][iniMode][maxIter][distMeasure][set_name][kmean_model]

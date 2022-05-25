@@ -16,6 +16,14 @@ wygeneruj mnostwo malych pdfow
 polacz w pdf
 
 
+DZIALA WSTEPNE FIGURY:
+    rysowanie zbioru klastrow dla danych parametrow klastrowania
+
+ZROB WSTEPNE FIGURY:
+    MSE i silhouette zbierz dane
+    
+
+
 ANALIZA:
     dla dane zbioru parametrow: iniMode, maxIterations, distanceMeasure, oraz initSteps gdy kmeans|| zagniezdzaj:
         maxIterations

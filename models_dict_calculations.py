@@ -60,9 +60,9 @@ def operate_on_models(foo, models_dict):
     for set_name in ['set1', 'set2']:
         foo(set_name, models_dict)
         
+        
 def operate_on_parameters_and_models(foo, models_dict):
     operate_dictionary(foo, operate_on_models, models_dict)
-
 
 
 # create KMeans objects
@@ -115,33 +115,6 @@ def calculateMeanSquareError(k, iniMode, maxIter, distMeasure, set_name, models_
     
     param_dict[mse] = MSE
     
-def calculateMeanSquareErrorDF(k, iniMode, maxIter, distMeasure, set_name, models_dict):
-    sc = models_dict[sparkContext]
-    param_dict = models_dict[k][iniMode][maxIter][distMeasure][set_name]
-    kmeans_model = param_dict[kmean_model]
-    
-    pointsVectorsDF = [row[0] for row in models_dict[points_sets][set_name]]
-
-    # print(pointsVectorsDF)
-    
-    clustersCenters = [tuple(center) for center in kmeans_model.clusterCenters()]
-
-    clustersCentersBroadcast = sc.broadcast(clustersCenters)
-    # kmeans_model_Broadcast = sc.broadcast(kmeans_model)
-
-
-    print(kmeans_model.select(getPredictionCol()).take(1000))
-    
-    # getDist = lambda p1, p2: sqrt((p1[0] - p2[0])**2 + (p1[1] - p2[1])**2)
-    
-    
-    # # kmeans_model.predict(pointVector)
-    # MSE = sum([sqrt(getDist(pointVector, clustersCenters[kmeans_model.predict(pointVector)])) for pointVector in pointsVectors]) / len(pointsVectors)
-    
-    # param_dict[mse] = MSE
-
-
-
 
 def calculateSihouette(k, iniMode, maxIter, distMeasure, set_name, models_dict):
     param_dict = models_dict[k][iniMode][maxIter][distMeasure][set_name]
@@ -152,7 +125,6 @@ def calculateSihouette(k, iniMode, maxIter, distMeasure, set_name, models_dict):
     param_dict[silhouette] = evaluator.evaluate(predictions)
     
 
-# todo przeksztalc na operacje na df
 def calculateClustersSplit(k, iniMode, maxIter, distMeasure, set_name, models_dict):
     param_dict = models_dict[k][iniMode][maxIter][distMeasure][set_name]
     kmeans_model = param_dict[kmean_model]

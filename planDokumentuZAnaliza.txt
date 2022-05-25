@@ -1,0 +1,31 @@
+Utworz plik pdf
+
+
+zobacz jak tworzy sie pdf i zrob napisy 
+-analiza klastrowania
+-parametry i nazwa zbioru danych
+-pokaz kilka punktow 
+-describe
+-wszystkie inne mozliwe parametry o zbiorze
+
+TODO:
+zrob wykres jednego klastra
+polacz wykresy klastrowania w jednej lini
+dodaj wszytkie potrzebne informacje do model_dict w oblicz.py
+wygeneruj mnostwo malych pdfow
+polacz w pdf
+
+
+ANALIZA:
+    dla dane zbioru parametrow: iniMode, maxIterations, distanceMeasure, oraz initSteps gdy kmeans|| zagniezdzaj:
+        maxIterations
+            random
+                distanceMeasure
+                    WYGENERUJ wszystkie mozliwe figury potrzebne do zrobienia raportu
+
+                    wiersz 1 wykresow jak dla obu zbiorow wyglada klastrowanie dla roznych k set 1
+                    wiersz 2 wykresow jak dla obu zbiorow wyglada klastrowanie dla roznych k set 2
+
+                    wiersz 3 ich obliczone po klastrowaniu punkty wykres
+
+                    tabela wynikow testu KS

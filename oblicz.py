@@ -9,8 +9,7 @@ from pyspark.conf import SparkConf
 from pyspark.ml.feature import *
 from pyspark.ml import Pipeline
 
-import matplotlib.pyplot as plt
-import matplotlib
+
 import io
 import numpy as np
 import json

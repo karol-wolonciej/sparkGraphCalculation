@@ -65,7 +65,7 @@ def operate_on_parameters_and_models(foo, parameters, models_dict):
 
 # create KMeans objects
 def createKMeansObjects(k, iniMode, maxIter, distMeasure, set_name, models_dict):
-    parameters = models_dict["parameters"]
+    parameters = models_dict['parameters']
     models_dict[k][iniMode][maxIter][distMeasure][set_name][kmean_instance] = KMeans(featuresCol='features',
                                                                                      predictionCol='prediction',
                                                                                      k=k,
@@ -133,7 +133,7 @@ def calculateClustersSplit(k, iniMode, maxIter, distMeasure, set_name, models_di
     for i in range(k):
         param_dict[clustersSplit][i] = []
     
-    points = [row[0] for row in  models_dict[points_sets][set_name].select("features").collect()]
+    points = [row[0] for row in  models_dict[points_sets][set_name].select('features').collect()]
     clustersCenters = kmeans_model.clusterCenters()
     
     for pointVector in points:

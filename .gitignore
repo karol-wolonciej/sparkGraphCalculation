@@ -1,7 +1,12 @@
 *
 
-
 !.gitignore
+
 !analiza.py
+!keywords.py
+!functionalLib.py
+!models_dict_calculations.py
+!KStest.py
+
 !spark.conf
 !sparkSubmit.sh

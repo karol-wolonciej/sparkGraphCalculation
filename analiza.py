@@ -131,8 +131,8 @@ print(models_dict)
 
 df = spark.read.text('/home/karol/pdd/duzeZadanie2/grafy/birch3.txt')
 td = df.rdd #transformer df to rdd
-tr_data = td.map(lambda line: line[0].split()).map(lambda line: Row(X=int(line[0]), Y=int(line[1]))).toDF().sort('X', 'Y').sample(withReplacement=False, fraction=ratioOfInputPoints)
-
+tr_data = td.map(lambda line: line[0].split()).map(lambda line: Row(X=int(line[0]), Y=int(line[1]))).toDF().sort('X', 'Y').sample(withReplacement=False, fraction=ratioOfInputPoints).cache()
+# tr_data.cache()
 
 
 tr_data.describe().show()
@@ -141,9 +141,11 @@ tr_data.show(5)
 
 half = 0.5
 
-set1_points = tr_data.sample(withReplacement=False, fraction=half)
-set2_points = tr_data.subtract(set1_points)
+set1_points = tr_data.sample(withReplacement=False, fraction=half).cache()
+# set1_points.cache()
 
+set2_points = tr_data.subtract(set1_points).cache()
+# set2_points.cache()
 
 
 
@@ -153,8 +155,13 @@ scaler = StandardScaler(inputCol='before_scaling_features', outputCol='features'
 data_transformation_pipeline = Pipeline(stages= [assemble, scaler]) #wyrzucilem scaler
 
 transformed_data_model = data_transformation_pipeline.fit(tr_data)
+
 transformed_data_set1 = transformed_data_model.transform(set1_points).cache()
 transformed_data_set2 = transformed_data_model.transform(set2_points).cache()
+
+# transformed_data_set1.cache()
+# transformed_data_set2.cache()
+
 
 
 points_sets = { 'set1' : transformed_data_set1, 'set2' : transformed_data_set2 }
@@ -205,15 +212,15 @@ def operate_on_parameters_and_models(foo):
 # create KMeans objects
 def createKMeansObjects(k, iniMode, maxIter, distMeasure, set_name):
     models_dict[k][iniMode][maxIter][distMeasure][set_name][kmean_instance] = KMeans(featuresCol='features',
-                                                                                                     predictionCol='prediction',
-                                                                                                     k=k,
-                                                                                                     initMode=iniMode,
-                                                                                                     initSteps=initSteps,
-                                                                                                     tol=tol,
-                                                                                                     maxIter=maxIter,
-                                                                                                     seed=seed,
-                                                                                                     distanceMeasure=distMeasure
-                                                                                                    )
+                                                                                     predictionCol='prediction',
+                                                                                     k=k,
+                                                                                     initMode=iniMode,
+                                                                                     initSteps=initSteps,
+                                                                                     tol=tol,
+                                                                                     maxIter=maxIter,
+                                                                                     seed=seed,
+                                                                                     distanceMeasure=distMeasure
+                                                                                    )
 
 
 # fit models
@@ -233,7 +240,8 @@ def calculatePointsForTest(k, iniMode, maxIter, distMeasure, set_name):
 def plotPointsSets(k, iniMode, maxIter, distMeasure, set_name):
     plot_points(models_dict[k][iniMode][maxIter][distMeasure][set_name][points_for_test])
     
-    
+
+# todo przeksztalc na operacje na df
 def calculateMeanSquareError(k, iniMode, maxIter, distMeasure, set_name):
     param_dict = models_dict[k][iniMode][maxIter][distMeasure][set_name]
     kmeans_model = param_dict[kmean_model]
@@ -260,7 +268,8 @@ def calculateSihouette(k, iniMode, maxIter, distMeasure, set_name):
     predictions = kmeans_model.transform(points)
     param_dict[silhouette] = evaluator.evaluate(predictions)
     
-    
+
+# todo przeksztalc na operacje na df
 def calculateClustersSplit(k, iniMode, maxIter, distMeasure, set_name):
     param_dict = models_dict[k][iniMode][maxIter][distMeasure][set_name]
     kmeans_model = param_dict[kmean_model]
@@ -285,7 +294,7 @@ printPoints = partial(printLastParam, points_for_test)
 printMSE = partial(printLastParam, mse)
 printSilhouette = partial(printLastParam, silhouette)
 
-
+# tak musi byc chyba wiec trzeba zrobic collect ale moze mozna by wziasc tylko jakas czesc punktow a nie wszystkie
 def plotClusters(k, iniMode, maxIter, distMeasure, set_name):
     clusters = models_dict[k][iniMode][maxIter][distMeasure][set_name][clustersSplit]
     plot_clusters(k, clusters)

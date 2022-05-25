@@ -22,7 +22,7 @@ from plots import *
 from models_dict_calculations import *
 from keywords import *
 from KStest import ks2d2s, ks2d2s_2d_points
-
+from auxiliary import *
 
 
 sc = SparkContext()

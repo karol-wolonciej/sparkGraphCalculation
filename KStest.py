@@ -13,7 +13,6 @@ __all__ = ['ks2d2s', 'estat', 'estat2d']
 
 
 def ks2d2s_2d_points(points_set1, points_set2):
-
     x1, y1 = getArraysFromTupleList(points_set1)
     x2, y2 = getArraysFromTupleList(points_set2)
 

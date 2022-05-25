@@ -18,51 +18,10 @@ from functools import partial
 
 from KStest import ks2d2s, ks2d2s_2d_points
 from keywords import *
+from 
 
 
 
-
-def initialize_model_dict(models_dict):
-    parameters = models_dict[parametersDict]
-    for k in parameters['k_set']:
-        models_dict[k] = {}
-
-        for iniMode in parameters['initializationMode']:
-            models_dict[k][iniMode] = {}
-
-            for maxIter in parameters['maxIterations']:
-                models_dict[k][iniMode][maxIter] = {}
-
-                for distMeasure in parameters['distanceMeasures']:
-                    models_dict[k][iniMode][maxIter][distMeasure] = {}
-
-                    for set_name in ['set1', 'set2']:
-                        models_dict[k][iniMode][maxIter][distMeasure][set_name] = {}
-
-
-# foo bierze wszystkie parametry i byc moze wiecej
-def operate_dictionary(f_all, g, models_dict):
-    parameters = models_dict[parametersDict]
-    for k in parameters['k_set']:
-        for iniMode in parameters['initializationMode']:
-            for maxIter in parameters['maxIterations']:
-                for distMeasure in parameters['distanceMeasures']:
-                    partial_f_all = partial(f_all, k, iniMode, maxIter, distMeasure)
-                    g(partial_f_all, models_dict)
-
-
-# foo pierwotnie bralo wszystko ale tu bierze juz tylko set_name
-def operate_on_parameters(foo, models_dict):
-    operate_dictionary(foo, lambda f, md: f(md), models_dict)
-
-
-def operate_on_models(foo, models_dict):
-    for set_name in ['set1', 'set2']:
-        foo(set_name, models_dict)
-
-
-def operate_on_parameters_and_sets(foo, models_dict):
-    operate_dictionary(foo, operate_on_models, models_dict)
 
 
 # create KMeans objects
@@ -94,8 +53,8 @@ def calculatePointsForTest(k, iniMode, maxIter, distMeasure, set_name, models_di
     paramDict[points_for_test] = [(center_x * cluster_size, center_y * cluster_size) for ((center_x, center_y), cluster_size) in zip(clusterCenters, clusterSizes)]
 
 
-def plotPointsSets(k, iniMode, maxIter, distMeasure, set_name, models_dict):
-    plot_points(models_dict[k][iniMode][maxIter][distMeasure][set_name][points_for_test])
+# def plotPointsSets(k, iniMode, maxIter, distMeasure, set_name, models_dict):
+#     plot_points(models_dict[k][iniMode][maxIter][distMeasure][set_name][points_for_test])
 
 
 # todo przeksztalc na operacje na df
@@ -150,9 +109,9 @@ printMSE = partial(printLastParam, mse)
 printSilhouette = partial(printLastParam, silhouette)
 
 # tak musi byc chyba wiec trzeba zrobic collect ale moze mozna by wziasc tylko jakas czesc punktow a nie wszystkie
-def plotClusters(k, iniMode, maxIter, distMeasure, set_name, models_dict):
-    clusters = models_dict[k][iniMode][maxIter][distMeasure][set_name][clustersSplit]
-    plot_clusters(k, clusters)
+# def plotClusters(k, iniMode, maxIter, distMeasure, set_name, models_dict):
+#     clusters = models_dict[k][iniMode][maxIter][distMeasure][set_name][clustersSplit]
+#     plot_clusters(k, clusters)
 
 
 def deleteModelsAndDataframes(k, iniMode, maxIter, distMeasure, set_name, models_dict):

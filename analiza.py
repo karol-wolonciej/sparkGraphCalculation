@@ -2,6 +2,8 @@ import pickle
 import matplotlib.pyplot as plt
 import numpy as np
 
+from auxiliary import *
+
 model_dict_path = "/home/karol/pdd/duzeZadanie2/grafy/resTest.pkl"
 
 
@@ -25,9 +27,15 @@ def plotSubplot(plt_def, s_x, s_y, t_number):
     plt.subplot(s_x, s_y, t_number)
     plt_def()
 
-def plotCluster(clusterSplit):
 
+def plotCluster(clusterSplit, s_x, s_y, t_number):
+    clusterNumbers = clusterSplit.keys()
     
+    for i in range(clusterNumbers):
+        x, y = getArraysFromTupleList(clusterSplit[i])
+        draw = lambda: plt.scatter(x , y , label = i)
+        plotSubplot(draw, s_x, s_y, t_number)
+
 
 
 for i in range(n):

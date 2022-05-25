@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 from __future__ import division
 from distutils import core
 
@@ -15,6 +17,7 @@ import json
 from math import sqrt
 from functools import partial
 import pickle
+import sys
 
 from plots import *
 from models_dict_calculations import *
@@ -24,21 +27,25 @@ from KStest import ks2d2s, ks2d2s_2d_points
 
 
 
-
 sc = SparkContext()
 spark = SparkSession(sc)
 
-model_dict_file = open('/home/karol/pdd/duzeZadanie2/grafy/parameters.json')
+path_to_parameters = sys.argv[1]
+
+model_dict_file = open(path_to_parameters)
+
+parameters = json.load(model_dict_file)
 
 models_dict = {}
-models_dict[parametersDict] = json.load(model_dict_file)
+models_dict[parametersDict] = parameters
 models_dict[sparkContext] = sc
 
 model_dict_file.close()
 
-ratioOfInputPoints = models_dict[parametersDict][ratioOfInputPoints]
-dataset_path = models_dict[parametersDict][dataset_path_key]
-logLevel = models_dict[parametersDict][logLevel_key]
+ratioOfInputPoints = parameters[ratioOfInputPoints]
+dataset_path = parameters[dataset_path_key]
+logLevel = parameters[logLevel_key]
+resultDictionaryPath = parameters[resultDictionaryPath_key]
 
 spark.sparkContext.setLogLevel(logLevel)
 
@@ -91,11 +98,10 @@ operate_on_parameters_and_models(calculateClustersSplit, models_dict)
 operate_on_parameters(calculateKStest, models_dict)
 operate_on_parameters_and_models(deleteModelsAndDataframes, models_dict)
 
-
-
 del models_dict[sparkContext]
 del models_dict[points_sets]
 
 
-# with open('saved_models_dict.pkl', 'wb') as f:
-#     pickle.dump(models_dict, f)
+
+with open(resultDictionaryPath, 'wb') as f:
+    pickle.dump(models_dict, f)

@@ -10,7 +10,6 @@ from functionalLib import compose
 import json
 
 
-
 model_dict_path = "/home/karol/pdd/duzeZadanie2/grafy/dictTestowy.pkl"
 
 path_to_parameters = "/home/karol/pdd/duzeZadanie2/grafy/parameters.json"
@@ -46,6 +45,9 @@ u_labels = np.unique(n)
 
 s = 2
 
+
+green = (0, 0.5, 0)
+red = (0.5, 0, 0)
 
 def plotSet2D(pointsSet):
     x, y = getArraysFromTupleList(pointsSet)
@@ -96,6 +98,18 @@ def draw2DPlotsComparision(iniMode, maxIter, distMeasure, dataLastKey, models_di
         create2DPlot(set_name=set_name, dataLastKey=key, t_number=t_number)
     plt.show()
 
+def drawOriginalSubsetsComparision(models_dict):
+    sets_dict = models_dict[points_tuples_list]
+    for (t_number, pointSets, color) in zip(range(1,3), (sets_dict[set1], sets_dict[set2]), (red, green)):
+        x, y = getArraysFromTupleList(pointSets)
+        print(color)
+        draw = lambda: plt.scatter(x, y, color=color, s=s)
+        plotSubplot(draw, 1, 2, t_number)
+    plt.show()
+
+
+
+
 drawPlotsComparision = partial(operate_on_clustering_iniMode_maxIter_distMeasure, models_dict=models_dict)
 
 drawMSEPlot = partial(draw2DPlotsComparision, dataLastKey=mse)
@@ -108,10 +122,10 @@ drawPlotsComparision(drawSilhouettePlot)
 
 operate_on_clustering_iniMode_maxIter_distMeasure(drawClustersFigure, models_dict)
 
-plotSet2D(models_dict[points_tuples_list][original_set])
-plotSet2D(models_dict[points_tuples_list][set1])
-plotSet2D(models_dict[points_tuples_list][set1])
 
+
+drawOriginalSubsetsComparision(models_dict)
+plotSet2D(models_dict[points_tuples_list][original_set])
 
 
 

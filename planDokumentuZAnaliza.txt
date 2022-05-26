@@ -6,7 +6,10 @@ zobacz jak tworzy sie pdf i zrob napisy
 -wszystkie inne mozliwe parametry o zbiorze
 
 TODO:
-polacz mse i silhoutte razem
+zrob generyczne skladanie petli
+
+
+
 wygeneruj pdf dla kazdego zdjecia
 wygeneruj pdf dla wszystkich summary + plus KS dla oryginalnych 2 podzielonych zbiorow
 polacz w pdf

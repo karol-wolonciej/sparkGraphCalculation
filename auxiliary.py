@@ -54,9 +54,10 @@ def loop(f, *params):
 
 def getParamsLists(models_dict, *keywords):
     parameters = models_dict[parametersDict]
-    return map(lambda key: models_dict[key], keywords)
+    return map(lambda key: parameters[key], keywords)
 
-def operate_on_parameters(f, *paramsKeys):
+def operate_on_parameters(f, models_dict, *paramsKeys):
+    print(paramsKeys)
     paramsLists = getParamsLists(models_dict, *paramsKeys)
     foo = partial(f)
     loop(foo, paramsLists)
@@ -64,14 +65,18 @@ def operate_on_parameters(f, *paramsKeys):
 
 
 def operate_on_iniMode_maxIter_distMeasure_setName(f, models_dict):
-    params = [iniMode, maxIter, distMeasure] + [[set1, set2]]
+    params = getParamsLists(models_dict, initializationMode, maxIterations, distanceMeasures) + [[set1, set2]]
     foo = partial(f, models_dict=models_dict)
-    operate_on_parameters(foo, params)
+    operate_on_parameters(foo, models_dict, params)
     
 
+def operate_on_clustering_iniMode_maxIter_distMeasure(f, models_dict):
+    params = (initializationMode, maxIterations, distanceMeasures)
+    foo = partial(f, models_dict=models_dict)
+    operate_on_parameters(foo, models_dict, *params)
 
 
-# foo bierze wszystkie parametry i byc moze wiecej
+
 def operate_dictionary(f_all, g, models_dict):
     parameters = models_dict[parametersDict]
     for iniMode in parameters['initializationMode']:
@@ -81,12 +86,24 @@ def operate_dictionary(f_all, g, models_dict):
                     partial_f_all = partial(f_all, k, iniMode, maxIter, distMeasure)
                     g(partial_f_all, models_dict)
 
-def operate_on_clustering_iniMode_maxIter_distMeasure(f_all, models_dict):
-    parameters = models_dict[parametersDict]
-    for iniMode in parameters[initializationMode]:
-        for maxIter in parameters[maxIterations]:
-            for distMeasure in parameters[distanceMeasures]:
-                f_all(iniMode, maxIter, distMeasure, models_dict=models_dict)
+
+
+# foo bierze wszystkie parametry i byc moze wiecej
+# def operate_dictionary(f_all, g, models_dict):
+#     parameters = models_dict[parametersDict]
+#     for iniMode in parameters['initializationMode']:
+#         for maxIter in parameters['maxIterations']:
+#             for distMeasure in parameters['distanceMeasures']:
+#                 for k in parameters['k_set']:
+#                     partial_f_all = partial(f_all, k, iniMode, maxIter, distMeasure)
+#                     g(partial_f_all, models_dict)
+
+# def operate_on_clustering_iniMode_maxIter_distMeasure(f_all, models_dict):
+#     parameters = models_dict[parametersDict]
+#     for iniMode in parameters[initializationMode]:
+#         for maxIter in parameters[maxIterations]:
+#             for distMeasure in parameters[distanceMeasures]:
+#                 f_all(iniMode, maxIter, distMeasure, models_dict=models_dict)
 
 
 def operate_on_clustering_parameters(f_all, models_dict):
@@ -99,8 +116,8 @@ def operate_on_clustering_parameters(f_all, models_dict):
 
 
 # foo pierwotnie bralo wszystko ale tu bierze juz tylko set_name
-def operate_on_parameters(foo, models_dict):
-    operate_dictionary(foo, lambda f, md: f(md), models_dict)
+# def operate_on_parameters(foo, models_dict):
+#     operate_dictionary(foo, lambda f, md: f(md), models_dict)
 
 
 def operate_on_models(foo, models_dict):
@@ -108,8 +125,8 @@ def operate_on_models(foo, models_dict):
         foo(set_name, models_dict)
 
 
-def operate_on_parameters_and_sets(foo, models_dict):
-    operate_dictionary(foo, operate_on_models, models_dict)
+# def operate_on_parameters_and_sets(foo, models_dict):
+#     operate_dictionary(foo, operate_on_models, models_dict)
 
 
 def getStringKey(*args):

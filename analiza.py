@@ -108,7 +108,7 @@ def drawOriginalSubsetsComparision(models_dict):
     plt.show()
 
 
-
+# print(models_dict)
 
 drawPlotsComparision = partial(operate_on_clustering_iniMode_maxIter_distMeasure, models_dict=models_dict)
 
@@ -118,14 +118,14 @@ drawSilhouettePlot = partial(draw2DPlotsComparision, dataLastKey=silhouette)
 
 
 drawPlotsComparision(drawMSEPlot)
-drawPlotsComparision(drawSilhouettePlot)
+# drawPlotsComparision(drawSilhouettePlot)
 
-operate_on_clustering_iniMode_maxIter_distMeasure(drawClustersFigure, models_dict)
+# operate_on_clustering_iniMode_maxIter_distMeasure(drawClustersFigure, models_dict)
 
 
 
-drawOriginalSubsetsComparision(models_dict)
-plotSet2D(models_dict[points_tuples_list][original_set])
+# drawOriginalSubsetsComparision(models_dict)
+# plotSet2D(models_dict[points_tuples_list][original_set])
 
 
 

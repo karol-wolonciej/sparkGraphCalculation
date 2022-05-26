@@ -25,17 +25,14 @@ parameters_file.close()
 
 k_list = parameters['k_set']
 
-print(k_list)
 
 get_tile_x = { set1 : 1, set2 : 2 }
 get_tile_y = dict(zip(k_list, range(len(k_list))))
 
-print(get_tile_x)
 
 with open(model_dict_path, 'rb') as f:
     models_dict = pickle.load(f)
 
-print(models_dict)
 
 
 #Getting unique labels
@@ -46,6 +43,14 @@ u_labels = np.unique(n)
 #plotting the results:
 
 # cluster_split = models_dict[n]['random'][10]['euclidean']['set2']['clustersSplit']
+
+s = 2
+
+
+def plotSet2D(pointsSet):
+    x, y = getArraysFromTupleList(pointsSet)
+    plt.scatter(x, y, s=s)
+    plt.show()
 
 
 def plotSubplot(plt_def, s_x, s_y, t_number):
@@ -58,11 +63,11 @@ def plotCluster(clusters, s_x, s_y, t_number):
     
     for i in range(len(clusterNumbers)):
         x, y = getArraysFromTupleList(clusters[i])
-        draw = lambda: plt.scatter(x , y , label = i)
+        draw = lambda: plt.scatter(x , y , label=i, s=s)
         plotSubplot(draw, s_x, s_y, t_number)
 
 
-def drawClustersFigure(k, iniMode, maxIter, distMeasure, set_name, models_dict):
+def drawClusterFigure(k, iniMode, maxIter, distMeasure, set_name, models_dict):
     paramDict = models_dict[k][iniMode][maxIter][distMeasure][set_name]
     clusters = paramDict[clustersSplit]
     tile_number = get_tile_y[k] * 2 + get_tile_x[set_name]
@@ -70,64 +75,43 @@ def drawClustersFigure(k, iniMode, maxIter, distMeasure, set_name, models_dict):
     y_tiles = len(k_list)
     plotCluster(clusters, y_tiles, x_tiles, tile_number)
 
+def drawClustersFigure(iniMode, maxIter, distMeasure, models_dict):
+    for set_name in [set1, set2]:
+        for k in k_list:
+            drawClusterFigure(k, iniMode, maxIter, distMeasure, set_name, models_dict)
+    plt.show()   
 
-def drawLinePlot(iniMode, maxIter, distMeasure, set_name, dataLastKey, models_dict):
+def createLinePlot(iniMode, maxIter, distMeasure, set_name, dataLastKey, t_number, models_dict):
     fullDataKey = getStringKey(iniMode, maxIter, distMeasure, set_name, dataLastKey)
     xy_list = compose(list, zip)(k_list, compose(list, map)(partial(round, ndigits=2), models_dict[fullDataKey]))
-    print(xy_list)
     x, y = getArraysFromTupleList(xy_list)
+    plt.subplot(1, 2, t_number)
     plt.plot(x, y)
+
+
+def draw2DPlotsComparision(iniMode, maxIter, distMeasure, dataLastKey, models_dict):
+    create2DPlot = partial(createLinePlot, iniMode, maxIter, distMeasure, models_dict=models_dict)
+    params = zip([1,2], [dataLastKey]*2, [set1, set2])
+    for (t_number, key, set_name) in params:
+        create2DPlot(set_name=set_name, dataLastKey=key, t_number=t_number)
     plt.show()
 
+drawPlotsComparision = partial(operate_on_clustering_iniMode_maxIter_distMeasure, models_dict=models_dict)
 
-drawMSEPlot = partial(drawLinePlot, dataLastKey=mse)
-drawSilhouettePlot = partial(drawLinePlot, dataLastKey=silhouette)
-
-
-operate_on_clustering_parameters(drawSilhouettePlot, models_dict)
-
-# operate_on_parameters_and_sets(drawClustersFigure, models_dict)
-
-plt.show()
-
-
-print(models_dict)
-
-# for i in range(n):
-#     x = np.array([cor[0] for cor in cluster_split[i]])
-#     y = np.array([cor[1] for cor in cluster_split[i]])
-#     plt.scatter(x , y , label = i)
-# plt.legend()
-# plt.show()
+drawMSEPlot = partial(draw2DPlotsComparision, dataLastKey=mse)
+drawSilhouettePlot = partial(draw2DPlotsComparision, dataLastKey=silhouette)
 
 
 
-# x = np.array([0, 1, 2, 3])
-# y = np.array([3, 8, 1, 10])
+drawPlotsComparision(drawMSEPlot)
+drawPlotsComparision(drawSilhouettePlot)
 
-# plt.subplot(2, 2, 1)
-# plt.plot(x,y)
+operate_on_clustering_iniMode_maxIter_distMeasure(drawClustersFigure, models_dict)
 
-# x = np.array([0, 1, 2, 3])
-# y = np.array([10, 20, 30, 40])
-
-# plt.subplot(2, 2, 2)
-# plt.plot(x,y)
-
-
-# x = np.array([0, 1, 2, 3])
-# y = np.array([10, 20, 30, 40])
-
-# plt.subplot(2, 2, 3)
-# plt.plot(x,y)
-
-# x = np.array([0, 1, 2, 3])
-# y = np.array([3, 8, 1, 10])
-
-# plt.subplot(2, 2, 4)
-# plt.plot(x,y)
+plotSet2D(models_dict[points_tuples_list][original_set])
+plotSet2D(models_dict[points_tuples_list][set1])
+plotSet2D(models_dict[points_tuples_list][set1])
 
 
 
-# plt.show() 
 

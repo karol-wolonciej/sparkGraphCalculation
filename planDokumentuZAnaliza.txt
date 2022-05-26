@@ -1,6 +1,3 @@
-Utworz plik pdf
-
-
 zobacz jak tworzy sie pdf i zrob napisy 
 -analiza klastrowania
 -parametry i nazwa zbioru danych
@@ -9,13 +6,17 @@ zobacz jak tworzy sie pdf i zrob napisy
 -wszystkie inne mozliwe parametry o zbiorze
 
 TODO:
+polacz mse i silhoutte razem
+wygeneruj pdf dla kazdego zdjecia
 wygeneruj pdf dla wszystkich summary + plus KS dla oryginalnych 2 podzielonych zbiorow
-wygeneruj pdf 
-
-
-
-wygeneruj mnostwo malych pdfow
 polacz w pdf
+ 
+
+zrobic skrypt do generowania i zapisywania wynikowego datasetu z grafu do pliku
+przerobic materializowanie danych na odpowiednie
+zapisywac do slownika tylko pewien zbior punktow do utworzenia raportu
+
+
 
 
 
@@ -29,14 +30,16 @@ PODPISZ FIGURY:
 
 DZIALA WSTEPNE FIGURY:
     rysowanie zbioru klastrow dla danych parametrow klastrowania
-    rysowanie MSE i silhouette wykresow liniowych
+    rysowanie MSE i silhouette wykresow liniowych obok siebie
+
 
 ZROB WSTEPNE FIGURY:
     rysowanie dwoch oryginalnych zbiorow obok siebie
 
 
 
-
+OBSERWACJE:
+    nic nie zmienia w dictionary, wszelkie zmiany zrobimy wylacznie a oblicz.py i nie przesylamy wszystkich punktow do robienia raportu (wybieramy pewna ustalona liczbe po prostu)
 
 
 ANALIZA:

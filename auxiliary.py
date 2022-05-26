@@ -44,6 +44,14 @@ def operate_dictionary(f_all, g, models_dict):
                     partial_f_all = partial(f_all, k, iniMode, maxIter, distMeasure)
                     g(partial_f_all, models_dict)
 
+def operate_on_clustering_iniMode_maxIter_distMeasure(f_all, models_dict):
+    parameters = models_dict[parametersDict]
+    for iniMode in parameters['initializationMode']:
+        for maxIter in parameters['maxIterations']:
+            for distMeasure in parameters['distanceMeasures']:
+                f_all(iniMode, maxIter, distMeasure, models_dict=models_dict)
+
+
 def operate_on_clustering_parameters(f_all, models_dict):
     parameters = models_dict[parametersDict]
     for iniMode in parameters['initializationMode']:

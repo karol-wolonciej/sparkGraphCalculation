@@ -68,13 +68,32 @@ transformed_data_model = data_transformation_pipeline.fit(tr_data)
 transformed_data_set1 = transformed_data_model.transform(set1_points).cache()
 transformed_data_set2 = transformed_data_model.transform(set2_points).cache()
 
-set_point_to_tuples = lambda pointsDF: [tuple([val for val in denseVector[0]]) for denseVector in pointsDF.select('features').collect()]
+
+
+
+models_dict[originalSetSummary] = tr_data.summary().toPandas().to_string()
+models_dict[originalSet1Summary] = set1_points.summary().toPandas().to_string()
+models_dict[originalSet2Summary] = set2_points.summary().toPandas().to_string()
+
+models_dict[transformedSet1Summary] = transformed_data_set1.summary().toPandas().to_string()
+models_dict[transformedSet2Summary] = transformed_data_set2.summary().toPandas().to_string()
+
+
+set_point_to_tuples = lambda pointsDF: [tuple([round(val, 3) for val in denseVector[0]]) for denseVector in pointsDF.select('features').collect()]
 
 set1PointsTuplesForTest = set_point_to_tuples(transformed_data_set1)
 set2PointsTuplesForTest = set_point_to_tuples(transformed_data_set2)
+oryginalSetPointsTuples = set1PointsTuplesForTest + set2PointsTuplesForTest
 
 models_dict[original_KS_test] = ks2d2s_2d_points(set1PointsTuplesForTest, set2PointsTuplesForTest)
-models_dict[points_sets] = { set1 : transformed_data_set1, set2 : transformed_data_set2 }
+models_dict[points_sets] = { set1 : transformed_data_set1, 
+                             set2 : transformed_data_set2 }
+
+models_dict[points_tuples_list] = { set1 : set1PointsTuplesForTest, 
+                                    set2 : set2PointsTuplesForTest,
+                                    original_set : oryginalSetPointsTuples }
+
+
 
 
 initialize_model_dict(models_dict)

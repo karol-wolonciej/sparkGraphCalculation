@@ -18,7 +18,7 @@ from functools import partial
 
 from KStest import ks2d2s, ks2d2s_2d_points
 from keywords import *
-
+from auxiliary import getStringKey
 
 
 
@@ -112,9 +112,7 @@ printSilhouette = partial(printLastParam, silhouette)
 #     clusters = models_dict[k][iniMode][maxIter][distMeasure][set_name][clustersSplit]
 #     plot_clusters(k, clusters)
 
-def getStringKey(*args):
-    newDataKeyword = '_'.join([str(arg) for arg in args])
-    return newDataKeyword
+
 
 
 def gatherData(k, iniMode, maxIter, distMeasure, set_name, models_dict, dataKey=None):

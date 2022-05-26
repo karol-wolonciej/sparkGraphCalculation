@@ -9,19 +9,34 @@ zobacz jak tworzy sie pdf i zrob napisy
 -wszystkie inne mozliwe parametry o zbiorze
 
 TODO:
-zrob wykres jednego klastra
-polacz wykresy klastrowania w jednej lini
-dodaj wszytkie potrzebne informacje do model_dict w oblicz.py
+wygeneruj pdf dla wszystkich summary + plus KS dla oryginalnych 2 podzielonych zbiorow
+wygeneruj pdf 
+
+
+
 wygeneruj mnostwo malych pdfow
 polacz w pdf
 
 
+
+PODPISANE FIGURY:
+
+
+PODPISZ FIGURY:
+    figura zestawienia klastrow
+    figura dwa oryginalnych zbiorow
+    figury MSE i silhouette
+
 DZIALA WSTEPNE FIGURY:
     rysowanie zbioru klastrow dla danych parametrow klastrowania
+    rysowanie MSE i silhouette wykresow liniowych
 
 ZROB WSTEPNE FIGURY:
-    MSE i silhouette zbierz dane
-    
+    rysowanie dwoch oryginalnych zbiorow obok siebie
+
+
+
+
 
 
 ANALIZA:

@@ -44,6 +44,14 @@ def operate_dictionary(f_all, g, models_dict):
                     partial_f_all = partial(f_all, k, iniMode, maxIter, distMeasure)
                     g(partial_f_all, models_dict)
 
+def operate_on_clustering_parameters(f_all, models_dict):
+    parameters = models_dict[parametersDict]
+    for iniMode in parameters['initializationMode']:
+        for maxIter in parameters['maxIterations']:
+            for distMeasure in parameters['distanceMeasures']:
+                for set_name in [set1, set2]:  
+                    f_all(iniMode, maxIter, distMeasure, set_name, models_dict=models_dict)
+
 
 # foo pierwotnie bralo wszystko ale tu bierze juz tylko set_name
 def operate_on_parameters(foo, models_dict):
@@ -57,3 +65,8 @@ def operate_on_models(foo, models_dict):
 
 def operate_on_parameters_and_sets(foo, models_dict):
     operate_dictionary(foo, operate_on_models, models_dict)
+
+
+def getStringKey(*args):
+    newDataKeyword = '_'.join([str(arg) for arg in args])
+    return newDataKeyword

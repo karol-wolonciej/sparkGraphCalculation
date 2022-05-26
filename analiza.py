@@ -1,9 +1,11 @@
 import pickle
 import matplotlib.pyplot as plt
 import numpy as np
+from yaml import compose
 
 from auxiliary import *
 from keywords import *
+from functionalLib import compose
 
 import json
 
@@ -33,7 +35,7 @@ print(get_tile_x)
 with open(model_dict_path, 'rb') as f:
     models_dict = pickle.load(f)
 
-# print(model_dict)
+print(models_dict)
 
 
 #Getting unique labels
@@ -69,9 +71,23 @@ def drawClustersFigure(k, iniMode, maxIter, distMeasure, set_name, models_dict):
     plotCluster(clusters, y_tiles, x_tiles, tile_number)
 
 
+def drawLinePlot(iniMode, maxIter, distMeasure, set_name, dataLastKey, models_dict):
+    fullDataKey = getStringKey(iniMode, maxIter, distMeasure, set_name, dataLastKey)
+    xy_list = compose(list, zip)(k_list, compose(list, map)(partial(round, ndigits=2), models_dict[fullDataKey]))
+    print(xy_list)
+    x, y = getArraysFromTupleList(xy_list)
+    plt.plot(x, y)
+    plt.show()
 
 
-operate_on_parameters_and_sets(drawClustersFigure, models_dict)
+drawMSEPlot = partial(drawLinePlot, dataLastKey=mse)
+drawSilhouettePlot = partial(drawLinePlot, dataLastKey=silhouette)
+
+
+operate_on_clustering_parameters(drawSilhouettePlot, models_dict)
+
+# operate_on_parameters_and_sets(drawClustersFigure, models_dict)
+
 plt.show()
 
 

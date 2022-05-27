@@ -46,6 +46,7 @@ def loop(f, *params):
 
 
 def getParamsLists(models_dict, *keywords):
+    print(keywords)
     parameters = models_dict[parametersDict]
     return compose(tuple, map)(lambda key: parameters[key], keywords)
 
@@ -58,12 +59,12 @@ def operate_on_parameters(f, models_dict, *paramsKeys):
 
 def operate_on_clustering_k_iniMode_maxIter_distMeasure_setName(f, models_dict):
     operate_on_parameters(f, 
-                          models_dict, 
+                          models_dict,
                           k_set,
                           initializationMode, 
                           maxIterations, 
                           distanceMeasures,
-                          set_name)
+                          set_name) 
 
 
 def operate_on_clustering_iniMode_maxIter_distMeasure(f, models_dict):

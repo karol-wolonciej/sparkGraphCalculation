@@ -6,8 +6,7 @@ zobacz jak tworzy sie pdf i zrob napisy
 -wszystkie inne mozliwe parametry o zbiorze
 
 TODO:
-zrob generyczne skladanie petli
-
+dodaj annotacje do wykresow
 
 
 wygeneruj pdf dla kazdego zdjecia

@@ -83,7 +83,11 @@ set_point_to_tuples = lambda pointsDF: [tuple([round(val, 3) for val in denseVec
 
 set1PointsTuplesForTest = set_point_to_tuples(transformed_data_set1)
 set2PointsTuplesForTest = set_point_to_tuples(transformed_data_set2)
+
 oryginalSetPointsTuples = set1PointsTuplesForTest + set2PointsTuplesForTest
+
+
+
 
 models_dict[original_KS_test] = ks2d2s_2d_points(set1PointsTuplesForTest, set2PointsTuplesForTest)
 models_dict[points_sets] = { set1 : transformed_data_set1, 
@@ -98,23 +102,23 @@ models_dict[points_tuples_list] = { set1 : set1PointsTuplesForTest,
 
 initialize_model_dict(models_dict)
 
-operateParametersWithSets = partial(operate_on_parameters_and_sets, models_dict=models_dict)
+operateOnAllParameters = partial(operate_on_clustering_k_iniMode_maxIter_distMeasure_setName, models_dict=models_dict)
 operateParametersOnly = partial(operate_on_parameters, models_dict=models_dict)
 
 gatherMSE = partial(gatherData, dataKey=mse)
 gatherSilhouette = partial(gatherData, dataKey=silhouette)
 
-operateParametersWithSets(createKMeansObjects)
-operateParametersWithSets(fitModels)
-operateParametersWithSets(calculatePointsForTest)
-operateParametersWithSets(calculateMeanSquareError)
-operateParametersWithSets(calculateSihouette)
-operateParametersWithSets(calculateClustersSplit)
-operateParametersWithSets(gatherMSE)
-operateParametersWithSets(gatherSilhouette)
+operateOnAllParameters(createKMeansObjects)
+operateOnAllParameters(fitModels)
+operateOnAllParameters(calculatePointsForTest)
+operateOnAllParameters(calculateMeanSquareError)
+operateOnAllParameters(calculateSihouette)
+operateOnAllParameters(calculateClustersSplit)
+operateOnAllParameters(gatherMSE)
+operateOnAllParameters(gatherSilhouette)
 
-operateParametersOnly(calculateKStest)
-operateParametersWithSets(deleteModelsAndDataframes)
+# operateParametersOnly(calculateKStest)
+operateOnAllParameters(deleteModelsAndDataframes)
 
 del models_dict[sparkContext]
 del models_dict[points_sets]

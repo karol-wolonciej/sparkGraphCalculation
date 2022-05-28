@@ -46,7 +46,6 @@ def loop(f, *params):
 
 
 def getParamsLists(models_dict, *keywords):
-    print(keywords)
     parameters = models_dict[parametersDict]
     return compose(tuple, map)(lambda key: parameters[key], keywords)
 

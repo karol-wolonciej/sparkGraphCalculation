@@ -105,8 +105,19 @@ initialize_model_dict(models_dict)
 operateOnAllParameters = partial(operate_on_clustering_k_iniMode_maxIter_distMeasure_setName, models_dict=models_dict)
 operateParametersOnly = partial(operate_on_parameters, models_dict=models_dict)
 
-gatherMSE = partial(gatherData, dataKey=mse)
-gatherSilhouette = partial(gatherData, dataKey=silhouette)
+
+
+parametersKeywords = [k_set, initializationMode, maxIterations, distanceMeasures]
+parametersSetsKeywords = parametersKeywords + [set_name]
+
+gatherDataFromDict = lambda *params: lambda lastDataKey: partial(gatherData, dataKey=lastDataKey, params=params)
+
+gatherFromParametersAndSets = gatherDataFromDict(*parametersSetsKeywords)
+gatherDataFromParameters = gatherDataFromDict(*parametersKeywords)
+
+gatherMSE = gatherFromParametersAndSets(mse)
+gatherSilhouette = gatherFromParametersAndSets(silhouette)
+gatherKStest = gatherDataFromParameters(KS_test)
 
 operateOnAllParameters(createKMeansObjects)
 operateOnAllParameters(fitModels)
@@ -116,8 +127,9 @@ operateOnAllParameters(calculateSihouette)
 operateOnAllParameters(calculateClustersSplit)
 operateOnAllParameters(gatherMSE)
 operateOnAllParameters(gatherSilhouette)
+operateParametersOnly(gatherKStest)
 
-# operateParametersOnly(calculateKStest)
+operateParametersOnly(calculateKStest)
 operateOnAllParameters(deleteModelsAndDataframes)
 
 del models_dict[sparkContext]

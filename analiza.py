@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 import pickle
+from statistics import mode
 import matplotlib.pyplot as plt
 import numpy as np
 from prometheus_client import Summary
@@ -11,6 +12,7 @@ from keywords import *
 from functionalLib import compose
 from plots import *
 from textPDFs import *
+from raport_generation import *
 
 import json
 
@@ -41,12 +43,11 @@ drawSilhouettePlot = partial(draw2DPlotsComparision, silhouette)
 drawKStestPlot = partial(draw2DPlotKStest, KS_test)
 
 
-# print(models_dict)
-
+print(models_dict)
 
 # createRaportHeader(models_dict)
 # operateOn_iniMode_maxIter_distMeasure(createSubHeaders)
-
+ 
 # createSummary(originalSetSummary, models_dict)
 # createSummary(originalSet1Summary, models_dict)
 # createSummary(originalSet2Summary, models_dict)
@@ -56,6 +57,13 @@ drawKStestPlot = partial(draw2DPlotKStest, KS_test)
 # drawPlot(drawMSEPlot)
 # drawPlot(drawSilhouettePlot)
 # drawPlot(drawKStestPlot)
-operate_on_clustering_iniMode_maxIter_distMeasure(drawClustersFigure, models_dict=models_dict)
+# operate_on_clustering_iniMode_maxIter_distMeasure(drawClustersFigure, models_dict=models_dict)
 # drawOriginalSubsetsComparision(models_dict)
 # plotSet2D(models_dict, models_dict[points_tuples_list][original_set], 'original set')
+
+# partialPDFsPaths = []
+# getRaportHeaderPaths(partialPDFsPaths, models_dict)
+# getPaths = partial(getPathsForClusteringAnalysis, partialPDFsPaths)
+# operate_on_clustering_iniMode_maxIter_distMeasure(getPaths, models_dict=models_dict)
+
+# createRaport(models_dict, partialPDFsPaths)

@@ -37,7 +37,7 @@ pdf_extension = '.pdf'
 name = 'name'
 partialPDFsPath = 'partialPDFsPath'
 clusterCenters = 'clusterCenters'
-
+raportDestination = 'raportDestination'
 
 
 summariesDescribtion = {

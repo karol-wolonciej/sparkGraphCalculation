@@ -102,7 +102,7 @@ def getStringKey(lastDataKey, *args):
     return newDataKeyword
 
 
-def getPath(models_dict, *args):
+def get_path_to_partial_pdf(models_dict, *args):
     folderPath = get_partial_PDFs_path(models_dict)
     pdf_name = '_'.join([str(arg) for arg in args])
     return folderPath + pdf_name
@@ -113,8 +113,7 @@ def get_k_list(models_dict):
 
 
 def get_partial_PDFs_path(models_dict):
-    # hardcodedPath = "/home/karol/pdd/duzeZadanie2/partialPDFs/"
-    return models_dict[parametersDict]["partialPDFsPath"]
+    return models_dict[parametersDict]['partialPDFsPath']
 
 
 def addElementToDict(key, elem, dict):

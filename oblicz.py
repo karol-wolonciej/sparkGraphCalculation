@@ -130,7 +130,6 @@ operateParametersOnly(gatherKStest)
 
 operateOnAllParameters(deleteModelsAndDataframes)
 
-print(models_dict)
 
 del models_dict[sparkContext]
 del models_dict[points_sets]

@@ -22,7 +22,7 @@ def plotSet2D(models_dict, pointsSet, title):
     plt.figure(figsize=(x_plot_size, y_plot_size))
     plt.scatter(x, y, s=s)
     plt.title(title)
-    pdf_path = getPath(models_dict, 'original_set', pdf_extension)
+    pdf_path = get_path_to_partial_pdf(models_dict, 'original_set', pdf_extension)
     plt.savefig(pdf_path)
 
 
@@ -65,11 +65,22 @@ def drawClusterFigure(k, iniMode, maxIter, distMeasure, set_name, models_dict):
 
 def drawClustersFigure(models_dict, iniMode, maxIter, distMeasure):
     k_list = get_k_list(models_dict)
-    plt.figure(figsize=(x_two_columns_plot_size, single_subplot_y_size * len(k_list))) #(len(k_list)-2)
+    plt.figure(figsize=(x_two_columns_plot_size, single_subplot_y_size * len(k_list)))
     for set_name in [set1, set2]:
         for k in k_list:
             drawClusterFigure(k, iniMode, maxIter, distMeasure, set_name, models_dict)
-    pdf_path = getPath(models_dict, iniMode, maxIter, distMeasure, 'clusters', pdf_extension)
+    pdf_path = get_path_to_partial_pdf(models_dict, iniMode, maxIter, distMeasure, 'clusters', pdf_extension)
+    plt.savefig(pdf_path)
+
+def draw2DSetsComparision(dataLastKey, models_dict, iniMode, maxIter, distMeasure):
+    plt.figure(figsize=(x_two_columns_plot_size, y_plot_size))
+    create2DPlot = partial(createLineSubplot, dataLastKey, models_dict)
+    params = zip([1,2], [set1, set2])
+    x_label = x_label_k_value
+    y_label = dataLastKey
+    for (t_number, set_name) in params:
+        create2DPlot(t_number, x_label, y_label, set_name, iniMode, maxIter, distMeasure, set_name)
+    pdf_path = get_path_to_partial_pdf(models_dict, iniMode, maxIter, distMeasure, 'plot_comparision', dataLastKey, pdf_extension)
     plt.savefig(pdf_path)
 
 
@@ -104,7 +115,7 @@ def draw2DPlotsComparision(dataLastKey, models_dict, iniMode, maxIter, distMeasu
     y_label = dataLastKey
     for (t_number, set_name) in params:
         create2DPlot(t_number, x_label, y_label, set_name, iniMode, maxIter, distMeasure, set_name)
-    pdf_path = getPath(models_dict, iniMode, maxIter, distMeasure, 'plot_comparision', dataLastKey, pdf_extension)
+    pdf_path = get_path_to_partial_pdf(models_dict, iniMode, maxIter, distMeasure, 'plot_comparision', dataLastKey, pdf_extension)
     plt.savefig(pdf_path)
 
 
@@ -113,7 +124,7 @@ def draw2DPlotKStest(dataLastKey, models_dict, iniMode, maxIter, distMeasure):
     x_label = 'k value'
     y_label = dataLastKey
     createLinePlot(dataLastKey, models_dict, x_label, y_label, 'set1 & set2 ks', iniMode, maxIter, distMeasure)
-    pdf_path = getPath(models_dict, iniMode, maxIter, distMeasure, 'ks_plot', dataLastKey, pdf_extension)
+    pdf_path = get_path_to_partial_pdf(models_dict, iniMode, maxIter, distMeasure, 'ks_plot', dataLastKey, pdf_extension)
     plt.savefig(pdf_path)
 
 
@@ -126,5 +137,5 @@ def drawOriginalSubsetsComparision(models_dict):
         plotSubplot(draw, 1, 2, t_number)
         title = 'original ' + set_name
         plt.title(title)
-    pdf_path = getPath(models_dict, 'original_subsets_comparision', pdf_extension)
+    pdf_path = get_path_to_partial_pdf(models_dict, 'original_subsets_comparision', pdf_extension)
     plt.savefig(pdf_path)

@@ -6,8 +6,8 @@ zobacz jak tworzy sie pdf i zrob napisy
 -wszystkie inne mozliwe parametry o zbiorze
 
 TODO:
-wygeneruj pdf dla kazdego plotu
-wygeneruj pdf dla wszystkich summary + plus KS dla oryginalnych 2 podzielonych zbiorow
+popraw sciezki
+wygeneruj pdf dla Ks oryginalnych 2 zbiorow
 polacz w pdf
  
 

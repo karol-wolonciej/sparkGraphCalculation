@@ -95,8 +95,9 @@ def drawClustersFigure(models_dict, iniMode, maxIter, distMeasure):
             drawClusterFigure(k, iniMode, maxIter, distMeasure, set_name, models_dict)
     plt.show()   
 
-def createLinePlot(iniMode, maxIter, distMeasure, set_name, dataLastKey, t_number, x_label, y_label, label, models_dict):
-    fullDataKey = getStringKey(dataLastKey, iniMode, maxIter, distMeasure, set_name)
+
+def createLineSubplot(dataLastKey, models_dict, t_number, x_label, y_label, label, *params): #iniMode, maxIter, distMeasure, set_name, 
+    fullDataKey = getStringKey(dataLastKey, *params)
     xy_list = compose(list, zip)(k_list, compose(list, map)(partial(round, ndigits=2), models_dict[fullDataKey]))
     x, y = getArraysFromTupleList(xy_list)
     plt.subplot(1, 2, t_number)
@@ -106,22 +107,29 @@ def createLinePlot(iniMode, maxIter, distMeasure, set_name, dataLastKey, t_numbe
     plt.plot(x, y)
 
 
+def createLinePlot(dataLastKey, models_dict, x_label, y_label, label, *params):
+    fullDataKey = getStringKey(dataLastKey, *params)
+    xy_list = compose(list, zip)(k_list, compose(list, map)(partial(round, ndigits=2), models_dict[fullDataKey]))
+    x, y = getArraysFromTupleList(xy_list)
+    plt.title(label)
+    plt.xlabel(x_label)
+    plt.ylabel(y_label)
+    plt.plot(x, y)
+
+
 def draw2DPlotsComparision(dataLastKey, models_dict, iniMode, maxIter, distMeasure):
-    create2DPlot = partial(createLinePlot, iniMode, maxIter, distMeasure, models_dict=models_dict)
-    params = zip([1,2], [dataLastKey]*2, [set1, set2])
-    x_label = 'k value'
+    create2DPlot = partial(createLineSubplot, dataLastKey, models_dict)
+    params = zip([1,2], [set1, set2])
+    x_label = x_label_k_value
     y_label = dataLastKey
-    for (t_number, key, set_name) in params:
-        create2DPlot(set_name=set_name, dataLastKey=key, t_number=t_number, x_label=x_label, y_label=y_label, label=set_name)
+    for (t_number, set_name) in params:
+        create2DPlot(t_number, x_label, y_label, set_name, iniMode, maxIter, distMeasure, set_name)
     plt.show()
 
-def draw2DPlotsComparisionKStest(dataLastKey, models_dict, iniMode, maxIter, distMeasure):
-    create2DPlot = partial(createLinePlot, iniMode, maxIter, distMeasure, models_dict=models_dict)
-    params = zip([1,2], [dataLastKey]*2)
+def draw2DPlotKStest(dataLastKey, models_dict, iniMode, maxIter, distMeasure):
     x_label = 'k value'
     y_label = dataLastKey
-    for (t_number, key) in params:
-        create2DPlot(set_name=set_name, dataLastKey=key, t_number=t_number, x_label=x_label, y_label=y_label, label=set_name)
+    createLinePlot(dataLastKey, models_dict, x_label, y_label, 'set1 & set2 ks', iniMode, maxIter, distMeasure)
     plt.show()
 
 
@@ -135,25 +143,26 @@ def drawOriginalSubsetsComparision(models_dict):
         plt.title(title)
     plt.show()
 
-print(models_dict)
+# print(models_dict)
 
-drawPlotsComparision = partial(operate_on_clustering_iniMode_maxIter_distMeasure, models_dict=models_dict)
+drawPlot = partial(operate_on_clustering_iniMode_maxIter_distMeasure, models_dict=models_dict)
+# drawKStest = partial(createLineSubplot, KS_test, models_dict, 'k value', 'KS test', KS_test, iniMode, maxIter, distMeasure)
 
 drawMSEPlot = partial(draw2DPlotsComparision, mse)
 drawSilhouettePlot = partial(draw2DPlotsComparision, silhouette)
-drawKStestPlot = partial(draw2DPlotsComparision, KS_test)
+drawKStestPlot = partial(draw2DPlotKStest, KS_test)
 
 
-# drawPlotsComparision(drawMSEPlot)
-# drawPlotsComparision(drawSilhouettePlot)
-drawPlotsComparision(drawKStestPlot)
+drawPlot(drawMSEPlot)
+drawPlot(drawSilhouettePlot)
+drawPlot(drawKStestPlot)
 
-# operate_on_clustering_iniMode_maxIter_distMeasure(drawClustersFigure, models_dict=models_dict)
+operate_on_clustering_iniMode_maxIter_distMeasure(drawClustersFigure, models_dict=models_dict)
 
 
 
-# drawOriginalSubsetsComparision(models_dict)
-# plotSet2D(models_dict[points_tuples_list][original_set], 'original set')
+drawOriginalSubsetsComparision(models_dict)
+plotSet2D(models_dict[points_tuples_list][original_set], 'original set')
 
 
 

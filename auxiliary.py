@@ -93,5 +93,5 @@ def operate_on_k_iniMode_maxIter_distMeasure(f, models_dict):
                           distanceMeasures)
 
 def getStringKey(lastDataKey, *args):
-    newDataKeyword = '_'.join([str(arg) for arg in args]) + '_' + lastDataKey
+    newDataKeyword = '_'.join([str(arg) for arg in args]) + '_' + lastDataKey #dodac do srodka
     return newDataKeyword

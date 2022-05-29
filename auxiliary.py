@@ -5,6 +5,10 @@ from functools import partial
 from functionalLib import compose
 
 
+x_two_columns_plot_size = 12
+single_subplot_y_size = 6
+x_plot_size = 6
+y_plot_size = 6
 
 def getArraysFromTupleList(pointsList):
     pos = { 'x' : 0, 'y' : 1 }
@@ -98,5 +102,30 @@ def getStringKey(lastDataKey, *args):
     return newDataKeyword
 
 
+def getPath(models_dict, *args):
+    folderPath = get_partial_PDFs_path(models_dict)
+    pdf_name = '_'.join([str(arg) for arg in args])
+    return folderPath + pdf_name
+
+
 def get_k_list(models_dict):
     return models_dict[parametersDict][k_set]
+
+
+def get_partial_PDFs_path(models_dict):
+    # hardcodedPath = "/home/karol/pdd/duzeZadanie2/partialPDFs/"
+    return models_dict[parametersDict]["partialPDFsPath"]
+
+
+def addElementToDict(key, elem, dict):
+    if key in dict.keys():
+        dict[key].append(elem)
+    else:
+        dict[key] = [elem]
+
+
+def getParamDict(models_dict, *params):
+    getNextElement = lambda key, dict: dict[key]
+    functions = compose(tuple, map)(lambda keyword: partial(getNextElement, keyword), params[::-1])
+    param_dict = compose(*functions)(models_dict)
+    return param_dict

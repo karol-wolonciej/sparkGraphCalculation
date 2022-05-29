@@ -23,7 +23,6 @@ resultDictionaryPath_key = 'resultDictionaryPath'
 originalSetSummary = 'originalSetSummary'
 originalSet1Summary = 'originalSet1Summary'
 originalSet2Summary = 'originalSet2Summary'
-transformedSetSummary = 'transformedSetSummary'
 transformedSet1Summary = 'transformedSet1Summary'
 transformedSet2Summary = 'transformedSet2Summary'
 initializationMode = 'initializationMode'
@@ -34,3 +33,16 @@ x_label_k_value = 'k value'
 y_label_mse = 'mse'
 y_label_silhoutte = 'silhouette'
 y_label_KS = 'ks'
+pdf_extension = '.pdf'
+name = 'name'
+partialPDFsPath = 'partialPDFsPath'
+
+
+
+summariesDescribtion = {
+    originalSetSummary : 'Original dataset summary:',
+    originalSet1Summary : 'Original set1 summary:',
+    originalSet2Summary : 'Original set2 summary:',
+    transformedSet1Summary : 'Transformed set1 summary:',
+    transformedSet2Summary : 'Transformerd set2 summary:'
+}

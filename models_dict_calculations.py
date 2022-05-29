@@ -18,7 +18,7 @@ from functools import partial
 
 from KStest import ks2d2s_2d_points
 from keywords import *
-from auxiliary import getStringKey
+from auxiliary import *
 from functionalLib import compose
 
 
@@ -83,20 +83,6 @@ def calculateClustersSplit(models_dict, k, iniMode, maxIter, distMeasure, set_na
     for pointVector in points:
         clusterCenter = kmeans_model.predict(pointVector)
         param_dict[clustersSplit][clusterCenter].append(tuple([round(val, 2) for val in pointVector.toArray()]))
-
-
-def addElementToDict(key, elem, dict):
-    if key in dict.keys():
-        dict[key].append(elem)
-    else:
-        dict[key] = [elem]
-
-
-def getParamDict(models_dict, *params):
-    getNextElement = lambda key, dict: dict[key]
-    functions = compose(tuple, map)(lambda keyword: partial(getNextElement, keyword), params[::-1])
-    param_dict = compose(*functions)(models_dict)
-    return param_dict
 
 
 def gatherData(dataKey, models_dict, *params): # (k, iniMode, maxIter, distMeasure, set_name, )

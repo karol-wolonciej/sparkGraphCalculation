@@ -6,10 +6,7 @@ zobacz jak tworzy sie pdf i zrob napisy
 -wszystkie inne mozliwe parametry o zbiorze
 
 TODO:
-dodaj annotacje do wykresow
-
-
-wygeneruj pdf dla kazdego zdjecia
+wygeneruj pdf dla kazdego plotu
 wygeneruj pdf dla wszystkich summary + plus KS dla oryginalnych 2 podzielonych zbiorow
 polacz w pdf
  
@@ -23,20 +20,16 @@ zapisywac do slownika tylko pewien zbior punktow do utworzenia raportu
 
 
 PODPISANE FIGURY:
-
-
-PODPISZ FIGURY:
     figura zestawienia klastrow
     figura dwa oryginalnych zbiorow
     figury MSE i silhouette
+    figura KS tests
+
+PODPISZ FIGURY:
+
 
 DZIALA WSTEPNE FIGURY:
-    rysowanie zbioru klastrow dla danych parametrow klastrowania
-    rysowanie MSE i silhouette wykresow liniowych obok siebie
-
-
-ZROB WSTEPNE FIGURY:
-    rysowanie dwoch oryginalnych zbiorow obok siebie
+    rysowanie wszystkiego
 
 
 

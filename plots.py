@@ -15,46 +15,15 @@ def get_tile_y(models_dict):
     return dict(zip(k_list, range(len(k_list))))
 
 
-def plot_dataset(set_):
-    x_l = set_.map(lambda pair: pair[0]).collect()
-    y_l = set_.map(lambda pair: pair[1]).collect()
-    
-    plt.figure()
-    plt.scatter(x_l, y_l, s = 0.1)
-    plt.show()
-    plt.close()
 
 
-def plot_points(points):
-    x_l = np.array([p[0] for p in points])
-    y_l = np.array([p[1] for p in points])
-    
-    plt.figure()
-    plt.scatter(x_l, y_l, s = 0.1)
-    plt.show()
-    plt.close()
-
-
-def plot_clusters(k, clusters):
-    u_labels = np.unique(k)
-
-    plt.figure()
-
-    for (clusterId, label) in zip(list(range(k)), u_labels):
-        x_l = np.array([p[0] for p in clusters[clusterId]])
-        y_l = np.array([p[1] for p in clusters[clusterId]])
-        
-        plt.scatter(x_l, y_l, label = label)
-    
-    plt.show()
-    plt.close()
-
-
-def plotSet2D(pointsSet, title):
+def plotSet2D(models_dict, pointsSet, title):
     x, y = getArraysFromTupleList(pointsSet)
+    plt.figure(figsize=(x_plot_size, y_plot_size))
     plt.scatter(x, y, s=s)
     plt.title(title)
-    plt.show()
+    pdf_path = getPath(models_dict, 'original_set', pdf_extension)
+    plt.savefig(pdf_path)
 
 
 def plotSubplot(plt_def, s_x, s_y, t_number):
@@ -82,7 +51,7 @@ def plotClusters(clusters, s_x, s_y, t_number, k):
 
 
 def drawClusterFigure(k, iniMode, maxIter, distMeasure, set_name, models_dict):
-    paramDict = models_dict[k][iniMode][maxIter][distMeasure][set_name]
+    paramDict = getParamDict(models_dict, k, iniMode, maxIter, distMeasure, set_name)
     clusters = paramDict[clustersSplit]
     tile_number = get_tile_y(models_dict)[k] * 2 + get_tile_x[set_name]
     k_list = get_k_list(models_dict)
@@ -93,10 +62,12 @@ def drawClusterFigure(k, iniMode, maxIter, distMeasure, set_name, models_dict):
 
 def drawClustersFigure(models_dict, iniMode, maxIter, distMeasure):
     k_list = get_k_list(models_dict)
+    plt.figure(figsize=(x_two_columns_plot_size, single_subplot_y_size * len(k_list))) #(len(k_list)-2)
     for set_name in [set1, set2]:
         for k in k_list:
             drawClusterFigure(k, iniMode, maxIter, distMeasure, set_name, models_dict)
-    plt.show()   
+    pdf_path = getPath(models_dict, iniMode, maxIter, distMeasure, 'clusters', pdf_extension)
+    plt.savefig(pdf_path)
 
 
 def createLineSubplot(dataLastKey, models_dict, t_number, x_label, y_label, label, *params):
@@ -123,23 +94,28 @@ def createLinePlot(dataLastKey, models_dict, x_label, y_label, label, *params):
 
 
 def draw2DPlotsComparision(dataLastKey, models_dict, iniMode, maxIter, distMeasure):
+    plt.figure(figsize=(x_two_columns_plot_size, y_plot_size))
     create2DPlot = partial(createLineSubplot, dataLastKey, models_dict)
     params = zip([1,2], [set1, set2])
     x_label = x_label_k_value
     y_label = dataLastKey
     for (t_number, set_name) in params:
         create2DPlot(t_number, x_label, y_label, set_name, iniMode, maxIter, distMeasure, set_name)
-    plt.show()
+    pdf_path = getPath(models_dict, iniMode, maxIter, distMeasure, 'plot_comparision', dataLastKey, pdf_extension)
+    plt.savefig(pdf_path)
 
 
 def draw2DPlotKStest(dataLastKey, models_dict, iniMode, maxIter, distMeasure):
+    plt.figure(figsize=(x_plot_size, y_plot_size))
     x_label = 'k value'
     y_label = dataLastKey
     createLinePlot(dataLastKey, models_dict, x_label, y_label, 'set1 & set2 ks', iniMode, maxIter, distMeasure)
-    plt.show()
+    pdf_path = getPath(models_dict, iniMode, maxIter, distMeasure, 'ks_plot', dataLastKey, pdf_extension)
+    plt.savefig(pdf_path)
 
 
 def drawOriginalSubsetsComparision(models_dict):
+    plt.figure(figsize=(x_two_columns_plot_size, y_plot_size))
     sets_dict = models_dict[points_tuples_list]
     for (t_number, pointSets, color, set_name) in zip(range(1,3), (sets_dict[set1], sets_dict[set2]), (blue, green), [set1, set2]):
         x, y = getArraysFromTupleList(pointSets)
@@ -147,4 +123,5 @@ def drawOriginalSubsetsComparision(models_dict):
         plotSubplot(draw, 1, 2, t_number)
         title = 'original ' + set_name
         plt.title(title)
-    plt.show()
+    pdf_path = getPath(models_dict, 'original_subsets_comparision', pdf_extension)
+    plt.savefig(pdf_path)

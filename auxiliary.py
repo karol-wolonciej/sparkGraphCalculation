@@ -92,6 +92,11 @@ def operate_on_k_iniMode_maxIter_distMeasure(f, models_dict):
                           maxIterations, 
                           distanceMeasures)
 
+
 def getStringKey(lastDataKey, *args):
-    newDataKeyword = '_'.join([str(arg) for arg in args]) + '_' + lastDataKey #dodac do srodka
+    newDataKeyword = '_'.join([str(arg) for arg in args]) + '_' + lastDataKey
     return newDataKeyword
+
+
+def get_k_list(models_dict):
+    return models_dict[parametersDict][k_set]

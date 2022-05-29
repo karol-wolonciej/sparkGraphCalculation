@@ -9,6 +9,7 @@
 !models_dict_calculations.py
 !KStest.py
 !auxiliary.py
+!plots.py
 
 !spark.conf
 !sparkSubmit.sh

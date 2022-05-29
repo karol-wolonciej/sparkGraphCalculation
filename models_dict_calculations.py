@@ -24,7 +24,7 @@ from functionalLib import compose
 
 
 # create KMeans objects
-def createKMeansObjects(k, iniMode, maxIter, distMeasure, set_name, models_dict):
+def createKMeansObjects(models_dict, k, iniMode, maxIter, distMeasure, set_name):
     parameters = models_dict[parametersDict]
     param_dict = getParamDict(models_dict, k, iniMode, maxIter, distMeasure, set_name)
     param_dict[kmean_instance] = KMeans(featuresCol='features',
@@ -40,25 +40,25 @@ def createKMeansObjects(k, iniMode, maxIter, distMeasure, set_name, models_dict)
 
 
 # fit models
-def fitModels(k, iniMode, maxIter, distMeasure, set_name, models_dict):
+def fitModels(models_dict, k, iniMode, maxIter, distMeasure, set_name):
     param_dict = getParamDict(models_dict, k, iniMode, maxIter, distMeasure, set_name)
     param_dict[kmean_model] = param_dict[kmean_instance].fit(models_dict[points_sets][set_name])
 
 
 # points for test
-def calculatePointsForTest(k, iniMode, maxIter, distMeasure, set_name, models_dict):
+def calculatePointsForTest(models_dict, k, iniMode, maxIter, distMeasure, set_name):
     param_dict = getParamDict(models_dict, k, iniMode, maxIter, distMeasure, set_name)
     clusterCenters = param_dict[kmean_model].clusterCenters()
     clusterSizes = param_dict[kmean_model].summary.clusterSizes
     param_dict[points_for_test] = [(center_x * cluster_size, center_y * cluster_size) for ((center_x, center_y), cluster_size) in zip(clusterCenters, clusterSizes)]
 
 
-# def plotPointsSets(k, iniMode, maxIter, distMeasure, set_name, models_dict):
+# def plotPointsSets(models_dict, k, iniMode, maxIter, distMeasure, set_name,):
 #     plot_points(models_dict[k][iniMode][maxIter][distMeasure][set_name][points_for_test])
 
 
 # todo przeksztalc na operacje na df
-def calculateMeanSquareError(k, iniMode, maxIter, distMeasure, set_name, models_dict):
+def calculateMeanSquareError(models_dict, k, iniMode, maxIter, distMeasure, set_name):
     param_dict = getParamDict(models_dict, k, iniMode, maxIter, distMeasure, set_name)
     kmeans_model = param_dict[kmean_model]
 
@@ -75,7 +75,7 @@ def calculateMeanSquareError(k, iniMode, maxIter, distMeasure, set_name, models_
     param_dict[mse] = MSE
 
 
-def calculateSihouette(k, iniMode, maxIter, distMeasure, set_name, models_dict):
+def calculateSihouette(models_dict, k, iniMode, maxIter, distMeasure, set_name):
     param_dict = getParamDict(models_dict, k, iniMode, maxIter, distMeasure, set_name)
     kmeans_model = param_dict[kmean_model]
     evaluator = ClusteringEvaluator()
@@ -84,7 +84,7 @@ def calculateSihouette(k, iniMode, maxIter, distMeasure, set_name, models_dict):
     param_dict[silhouette] = evaluator.evaluate(predictions)
 
 
-def calculateClustersSplit(k, iniMode, maxIter, distMeasure, set_name, models_dict):
+def calculateClustersSplit(models_dict, k, iniMode, maxIter, distMeasure, set_name):
     param_dict = models_dict[k][iniMode][maxIter][distMeasure][set_name]
     kmeans_model = param_dict[kmean_model]
     param_dict[clustersSplit] = {}
@@ -100,7 +100,7 @@ def calculateClustersSplit(k, iniMode, maxIter, distMeasure, set_name, models_di
         param_dict[clustersSplit][clusterCenter].append(tuple([round(val, 2) for val in pointVector.toArray()]))
 
 
-def printLastParam(paramKey, k, iniMode, maxIter, distMeasure, set_name, models_dict):
+def printLastParam(paramKey, models_dict, k, iniMode, maxIter, distMeasure, set_name):
     param_dict = getParamDict(models_dict, k, iniMode, maxIter, distMeasure, set_name)
     print(param_dict[paramKey])
 
@@ -118,31 +118,29 @@ def addElementToDict(key, elem, dict):
 
 
 def getParamDict(models_dict, *params):
-    print(params)
     getNextElement = lambda key, dict: dict[key]
     functions = compose(tuple, map)(lambda keyword: partial(getNextElement, keyword), params[::-1])
     param_dict = compose(*functions)(models_dict)
-    print(param_dict)
     return param_dict
 
 
-# k, iniMode, maxIter, distMeasure, set_name, models_dict
+# models_dict, k, iniMode, maxIter, distMeasure, set_name
 def gatherData(dataKey, models_dict, *params): # (k, iniMode, maxIter, distMeasure, set_name, )
     param_dict = getParamDict(models_dict, *params)
-    key = getStringKey(dataKey, *params)
+    key = getStringKey(dataKey, *params[1:])
     elem = param_dict[dataKey]
-    addElementToDict(key, elem, param_dict)
+    addElementToDict(key, elem, models_dict)
 
 
 
-def deleteModelsAndDataframes(k, iniMode, maxIter, distMeasure, set_name, models_dict):
+def deleteModelsAndDataframes(models_dict, k, iniMode, maxIter, distMeasure, set_name):
     param_dict = getParamDict(models_dict, k, iniMode, maxIter, distMeasure, set_name)
     del param_dict[kmean_model]
     del param_dict[kmean_instance]
 
 
 
-def calculateKStest(k, iniMode, maxIter, distMeasure, models_dict):
+def calculateKStest(models_dict, k, iniMode, maxIter, distMeasure):
     param_dict = getParamDict(models_dict, k, iniMode, maxIter, distMeasure)
 
     getPoints = lambda set_name: param_dict[set_name][points_for_test]
@@ -153,6 +151,6 @@ def calculateKStest(k, iniMode, maxIter, distMeasure, models_dict):
     param_dict[KS_test] = ks2d2s_2d_points(points_set1, points_set2)
 
 
-def printKStest(k, iniMode, maxIter, distMeasure, models_dict):
+def printKStest(models_dict, k, iniMode, maxIter, distMeasure):
     param_dict = getParamDict(models_dict, k, iniMode, maxIter, distMeasure)
     print(param_dict[KS_test])

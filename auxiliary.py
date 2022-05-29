@@ -52,7 +52,7 @@ def getParamsLists(models_dict, *keywords):
 
 def operate_on_parameters(f, models_dict, *paramsKeys):
     paramsLists = getParamsLists(models_dict, *paramsKeys)
-    foo = partial(f, models_dict=models_dict)
+    foo = partial(f, models_dict)
     loop(foo, *paramsLists)
 
 
@@ -64,6 +64,16 @@ def operate_on_clustering_k_iniMode_maxIter_distMeasure_setName(f, models_dict):
                           maxIterations, 
                           distanceMeasures,
                           set_name) 
+
+
+def operate_on_clustering_k_iniMode_maxIter_distMeasure(f, models_dict):
+    operate_on_parameters(f, 
+                          models_dict,
+                          k_set,
+                          initializationMode, 
+                          maxIterations, 
+                          distanceMeasures) 
+
 
 
 def operate_on_clustering_iniMode_maxIter_distMeasure(f, models_dict):
@@ -82,6 +92,6 @@ def operate_on_k_iniMode_maxIter_distMeasure(f, models_dict):
                           maxIterations, 
                           distanceMeasures)
 
-def getStringKey(*args):
-    newDataKeyword = '_'.join([str(arg) for arg in args])
+def getStringKey(lastDataKey, *args):
+    newDataKeyword = '_'.join([str(arg) for arg in args]) + '_' + lastDataKey
     return newDataKeyword

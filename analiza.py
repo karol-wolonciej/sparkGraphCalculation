@@ -88,14 +88,15 @@ def drawClusterFigure(k, iniMode, maxIter, distMeasure, set_name, models_dict):
     y_tiles = len(k_list)
     plotClusters(clusters, y_tiles, x_tiles, tile_number, k)
 
-def drawClustersFigure(iniMode, maxIter, distMeasure, models_dict):
+def drawClustersFigure(models_dict, iniMode, maxIter, distMeasure):
+    # print(iniMode)
     for set_name in [set1, set2]:
         for k in k_list:
             drawClusterFigure(k, iniMode, maxIter, distMeasure, set_name, models_dict)
     plt.show()   
 
 def createLinePlot(iniMode, maxIter, distMeasure, set_name, dataLastKey, t_number, x_label, y_label, label, models_dict):
-    fullDataKey = getStringKey(iniMode, maxIter, distMeasure, set_name, dataLastKey)
+    fullDataKey = getStringKey(dataLastKey, iniMode, maxIter, distMeasure, set_name)
     xy_list = compose(list, zip)(k_list, compose(list, map)(partial(round, ndigits=2), models_dict[fullDataKey]))
     x, y = getArraysFromTupleList(xy_list)
     plt.subplot(1, 2, t_number)
@@ -105,7 +106,7 @@ def createLinePlot(iniMode, maxIter, distMeasure, set_name, dataLastKey, t_numbe
     plt.plot(x, y)
 
 
-def draw2DPlotsComparision(iniMode, maxIter, distMeasure, dataLastKey, models_dict):
+def draw2DPlotsComparision(dataLastKey, models_dict, iniMode, maxIter, distMeasure):
     create2DPlot = partial(createLinePlot, iniMode, maxIter, distMeasure, models_dict=models_dict)
     params = zip([1,2], [dataLastKey]*2, [set1, set2])
     x_label = 'k value'
@@ -113,6 +114,16 @@ def draw2DPlotsComparision(iniMode, maxIter, distMeasure, dataLastKey, models_di
     for (t_number, key, set_name) in params:
         create2DPlot(set_name=set_name, dataLastKey=key, t_number=t_number, x_label=x_label, y_label=y_label, label=set_name)
     plt.show()
+
+def draw2DPlotsComparisionKStest(dataLastKey, models_dict, iniMode, maxIter, distMeasure):
+    create2DPlot = partial(createLinePlot, iniMode, maxIter, distMeasure, models_dict=models_dict)
+    params = zip([1,2], [dataLastKey]*2)
+    x_label = 'k value'
+    y_label = dataLastKey
+    for (t_number, key) in params:
+        create2DPlot(set_name=set_name, dataLastKey=key, t_number=t_number, x_label=x_label, y_label=y_label, label=set_name)
+    plt.show()
+
 
 def drawOriginalSubsetsComparision(models_dict):
     sets_dict = models_dict[points_tuples_list]
@@ -124,25 +135,25 @@ def drawOriginalSubsetsComparision(models_dict):
         plt.title(title)
     plt.show()
 
-# print(models_dict)
-
+print(models_dict)
 
 drawPlotsComparision = partial(operate_on_clustering_iniMode_maxIter_distMeasure, models_dict=models_dict)
 
-drawMSEPlot = partial(draw2DPlotsComparision, dataLastKey=mse)
-drawSilhouettePlot = partial(draw2DPlotsComparision, dataLastKey=silhouette)
+drawMSEPlot = partial(draw2DPlotsComparision, mse)
+drawSilhouettePlot = partial(draw2DPlotsComparision, silhouette)
+drawKStestPlot = partial(draw2DPlotsComparision, KS_test)
+
+
+# drawPlotsComparision(drawMSEPlot)
+# drawPlotsComparision(drawSilhouettePlot)
+drawPlotsComparision(drawKStestPlot)
+
+# operate_on_clustering_iniMode_maxIter_distMeasure(drawClustersFigure, models_dict=models_dict)
 
 
 
-drawPlotsComparision(drawMSEPlot)
-drawPlotsComparision(drawSilhouettePlot)
-
-operate_on_clustering_iniMode_maxIter_distMeasure(drawClustersFigure, models_dict)
-
-
-
-drawOriginalSubsetsComparision(models_dict)
-plotSet2D(models_dict[points_tuples_list][original_set], 'original set')
+# drawOriginalSubsetsComparision(models_dict)
+# plotSet2D(models_dict[points_tuples_list][original_set], 'original set')
 
 
 

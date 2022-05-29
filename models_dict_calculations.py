@@ -78,7 +78,7 @@ def calculateClustersSplit(models_dict, k, iniMode, maxIter, distMeasure, set_na
         param_dict[clustersSplit][i] = []
 
     points = [row[0] for row in  models_dict[points_sets][set_name].select('features').collect()]
-    # clustersCenters = kmeans_model.clusterCenters()
+    param_dict[clusterCenters] = compose(list, map)(lambda arr: tuple(arr.tolist()), kmeans_model.clusterCenters())
 
     for pointVector in points:
         clusterCenter = kmeans_model.predict(pointVector)

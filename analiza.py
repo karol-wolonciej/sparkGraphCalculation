@@ -41,21 +41,21 @@ drawSilhouettePlot = partial(draw2DPlotsComparision, silhouette)
 drawKStestPlot = partial(draw2DPlotKStest, KS_test)
 
 
+# print(models_dict)
 
 
+# createRaportHeader(models_dict)
+# operateOn_iniMode_maxIter_distMeasure(createSubHeaders)
 
-createRaportHeader(models_dict)
-operateOn_iniMode_maxIter_distMeasure(createSubHeaders)
+# createSummary(originalSetSummary, models_dict)
+# createSummary(originalSet1Summary, models_dict)
+# createSummary(originalSet2Summary, models_dict)
+# createSummary(transformedSet1Summary, models_dict)
+# createSummary(transformedSet2Summary, models_dict)
 
-createSummary(originalSetSummary, models_dict)
-createSummary(originalSet1Summary, models_dict)
-createSummary(originalSet2Summary, models_dict)
-createSummary(transformedSet1Summary, models_dict)
-createSummary(transformedSet2Summary, models_dict)
-
-drawPlot(drawMSEPlot)
-drawPlot(drawSilhouettePlot)
-drawPlot(drawKStestPlot)
+# drawPlot(drawMSEPlot)
+# drawPlot(drawSilhouettePlot)
+# drawPlot(drawKStestPlot)
 operate_on_clustering_iniMode_maxIter_distMeasure(drawClustersFigure, models_dict=models_dict)
-drawOriginalSubsetsComparision(models_dict)
-plotSet2D(models_dict, models_dict[points_tuples_list][original_set], 'original set')
+# drawOriginalSubsetsComparision(models_dict)
+# plotSet2D(models_dict, models_dict[points_tuples_list][original_set], 'original set')

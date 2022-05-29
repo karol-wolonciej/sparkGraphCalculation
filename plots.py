@@ -42,22 +42,25 @@ def plotCluster(x , y , s_x, s_y, t_number, label, s, k):
         plt.ylabel('k value: ' + str(k))
 
 
-def plotClusters(clusters, s_x, s_y, t_number, k):
+def plotClusters(clusters, clusterCenters, s_x, s_y, t_number, k):
     clusterNumbers = clusters.keys()
     
     for i in range(len(clusterNumbers)):
         x, y = getArraysFromTupleList(clusters[i])
         plotCluster(x , y , s_x, s_y, t_number, label=i, s=0.1, k=k)
+    x_cluster_centers, y_cluster_centers = getArraysFromTupleList(clusterCenters)
+    plt.scatter(x_cluster_centers , y_cluster_centers , s = 10, color = 'k')
 
 
 def drawClusterFigure(k, iniMode, maxIter, distMeasure, set_name, models_dict):
     paramDict = getParamDict(models_dict, k, iniMode, maxIter, distMeasure, set_name)
     clusters = paramDict[clustersSplit]
+    centers = paramDict[clusterCenters]
     tile_number = get_tile_y(models_dict)[k] * 2 + get_tile_x[set_name]
     k_list = get_k_list(models_dict)
     x_tiles = 2
     y_tiles = len(k_list)
-    plotClusters(clusters, y_tiles, x_tiles, tile_number, k)
+    plotClusters(clusters, centers, y_tiles, x_tiles, tile_number, k)
 
 
 def drawClustersFigure(models_dict, iniMode, maxIter, distMeasure):

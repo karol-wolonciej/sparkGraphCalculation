@@ -10,6 +10,7 @@
 !KStest.py
 !auxiliary.py
 !plots.py
+!textPDFs.py
 
 !spark.conf
 !sparkSubmit.sh

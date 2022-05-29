@@ -85,7 +85,7 @@ def calculateClustersSplit(models_dict, k, iniMode, maxIter, distMeasure, set_na
         param_dict[clustersSplit][clusterCenter].append(tuple([round(val, 2) for val in pointVector.toArray()]))
 
 
-def gatherData(dataKey, models_dict, *params): # (k, iniMode, maxIter, distMeasure, set_name, )
+def gatherData(dataKey, models_dict, *params):
     param_dict = getParamDict(models_dict, *params)
     key = getStringKey(dataKey, *params[1:])
     elem = param_dict[dataKey]

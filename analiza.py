@@ -38,15 +38,12 @@ operateOn_iniMode_maxIter_distMeasure = partial(operate_on_clustering_iniMode_ma
 
 drawPlot = partial(operate_on_clustering_iniMode_maxIter_distMeasure, models_dict=models_dict)
 
-drawMSEPlot = partial(draw2DPlotsComparision, mse)
-drawSilhouettePlot = partial(draw2DPlotsComparision, silhouette)
-drawKStestPlot = partial(draw2DPlotKStest, KS_test)
+drawMSEPlot = partial(draw2DLinePlotsComparision, mse)
+drawSilhouettePlot = partial(draw2DLinePlotsComparision, silhouette)
+drawPointsToTestPlot = partial(draw2DScatterPlotsComparision, points_for_test)
 
-
-print(models_dict)
-
-# createRaportHeader(models_dict)
-# operateOn_iniMode_maxIter_distMeasure(createSubHeaders)
+createRaportHeader(models_dict)
+operateOn_iniMode_maxIter_distMeasure(createSubHeaders)
  
 # createSummary(originalSetSummary, models_dict)
 # createSummary(originalSet1Summary, models_dict)
@@ -56,7 +53,9 @@ print(models_dict)
 
 # drawPlot(drawMSEPlot)
 # drawPlot(drawSilhouettePlot)
-# drawPlot(drawKStestPlot)
+drawPlot(drawPointsToTestPlot)
+# drawPlot(draw2DPlotKStest)
+
 # operate_on_clustering_iniMode_maxIter_distMeasure(drawClustersFigure, models_dict=models_dict)
 # drawOriginalSubsetsComparision(models_dict)
 # plotSet2D(models_dict, models_dict[points_tuples_list][original_set], 'original set')
@@ -66,4 +65,4 @@ print(models_dict)
 # getPaths = partial(getPathsForClusteringAnalysis, partialPDFsPaths)
 # operate_on_clustering_iniMode_maxIter_distMeasure(getPaths, models_dict=models_dict)
 
-# createRaport(models_dict, partialPDFsPaths)
+# createReport(models_dict, partialPDFsPaths)

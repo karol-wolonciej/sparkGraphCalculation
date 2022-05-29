@@ -10,6 +10,11 @@ single_subplot_y_size = 6
 x_plot_size = 6
 y_plot_size = 6
 
+
+def setNothing():
+    pass
+
+
 def getArraysFromTupleList(pointsList):
     pos = { 'x' : 0, 'y' : 1 }
     

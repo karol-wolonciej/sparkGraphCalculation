@@ -114,6 +114,7 @@ parametersSetsKeywords = parametersKeywords + [set_name]
 
 gatherMSE = partial(gatherData, mse)
 gatherSilhouette = partial(gatherData, silhouette)
+gatherClusterCenters = partial(gatherData, clusterCenters)
 gatherKStest = partial(gatherData, KS_test)
 
 
@@ -126,6 +127,7 @@ operateOnAllParameters(calculateClustersSplit)
 operateParametersOnly(calculateKStest)
 operateOnAllParameters(gatherMSE)
 operateOnAllParameters(gatherSilhouette)
+operateOnAllParameters(gatherClusterCenters)
 operateParametersOnly(gatherKStest)
 
 operateOnAllParameters(deleteModelsAndDataframes)

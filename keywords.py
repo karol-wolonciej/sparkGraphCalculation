@@ -40,6 +40,7 @@ clusterCenters = 'clusterCenters'
 raportDestination = 'raportDestination'
 clusteringComparisionHeaderPdf = 'clustering_comparision_header.pdf'
 pointsToTestComparisionHeader = 'points_to_test_comparision_header.pdf'
+sets_counts = 'sets_counts'
 
 summariesDescribtion = {
     originalSetSummary : 'Original dataset summary:',

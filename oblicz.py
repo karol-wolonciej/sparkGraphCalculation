@@ -60,6 +60,8 @@ half = 0.5
 set1_points = tr_data.sample(withReplacement=False, fraction=half).cache()
 set2_points = tr_data.subtract(set1_points).cache()
 
+models_dict[sets_counts] = { set1 : set1_points.count(), set2 : set2_points.count() }
+
 assemble = VectorAssembler(inputCols=[X,  Y], outputCol = 'before_scaling_features')
 scaler = StandardScaler(inputCol='before_scaling_features', outputCol='features')
 data_transformation_pipeline = Pipeline(stages= [assemble, scaler])
@@ -92,6 +94,7 @@ oryginalSetPointsTuples = set1PointsTuplesForTest + set2PointsTuplesForTest
 models_dict[original_KS_test] = ks2d2s_2d_points(set1PointsTuplesForTest, set2PointsTuplesForTest)
 models_dict[points_sets] = { set1 : transformed_data_set1, 
                              set2 : transformed_data_set2 }
+
 
 models_dict[points_tuples_list] = { set1 : set1PointsTuplesForTest, 
                                     set2 : set2PointsTuplesForTest,

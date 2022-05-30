@@ -3,6 +3,8 @@ import numpy as np
 from keywords import *
 from functools import partial
 from functionalLib import compose
+from scipy import spatial
+from scipy.spatial import distance
 
 
 x_two_columns_plot_size = 12
@@ -13,6 +15,10 @@ y_plot_size = 6
 
 def setNothing():
     pass
+
+
+cosineMeasure = lambda point1, point2: 1 - spatial.distance.cosine(list(point1), list(point2))
+euclideanMeasure = distance.euclidean
 
 
 def getArraysFromTupleList(pointsList):

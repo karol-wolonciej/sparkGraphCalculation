@@ -53,10 +53,16 @@ def calculatePointsForTest(models_dict, k, iniMode, maxIter, distMeasure, set_na
 def calculateMeanSquareError(models_dict, k, iniMode, maxIter, distMeasure, set_name):
     param_dict = getParamDict(models_dict, k, iniMode, maxIter, distMeasure, set_name)
     kmeans_model = param_dict[kmean_model]
-    pointsVectors = [row[0] for row in models_dict[points_sets][set_name].select('features').collect()]
+    points_df = models_dict[points_sets][set_name]
     clustersCenters = [tuple(center) for center in kmeans_model.clusterCenters()]
-    getDist = lambda p1, p2: sqrt((p1[0] - p2[0])**2 + (p1[1] - p2[1])**2)
-    MSE = sum([sqrt(getDist(pointVector, clustersCenters[kmeans_model.predict(pointVector)])) for pointVector in pointsVectors]) / len(pointsVectors)
+    clusterNumbers = compose(list, range, len)(clustersCenters)
+    centersDict = compose(dict, zip)(clusterNumbers, clustersCenters)
+    centersDict_br = models_dict[sparkContext].broadcast(centersDict)
+    predictions = kmeans_model.transform(points_df).select("features", "prediction").rdd.map(lambda row: ((row[0][0], row[0][1]), row[1]))
+    squareDistance = predictions.map(lambda vec: euclideanMeasure(vec[0], centersDict_br.value[vec[1]])**2)
+    add = lambda a, b: a+b
+    MSE = squareDistance.reduce(add) / models_dict[sets_counts][set_name] 
+    print(MSE)
     param_dict[mse] = MSE
 
 

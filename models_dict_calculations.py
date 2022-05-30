@@ -85,11 +85,14 @@ def calculateClustersSplit(models_dict, k, iniMode, maxIter, distMeasure, set_na
         param_dict[clustersSplit][clusterCenter].append(tuple([round(val, 2) for val in pointVector.toArray()]))
 
 
-def gatherData(dataKey, models_dict, *params):
+def gatherDataForEveryK(dataKey, models_dict, *params):
     param_dict = getParamDict(models_dict, *params)
+    print(params)
+    print(param_dict)
     key = getStringKey(dataKey, *params[1:])
     elem = param_dict[dataKey]
     addElementToDict(key, elem, models_dict)
+
 
 
 def deleteModelsAndDataframes(models_dict, k, iniMode, maxIter, distMeasure, set_name):
@@ -119,3 +122,15 @@ def printLastParam(paramKey, models_dict, k, iniMode, maxIter, distMeasure, set_
 printPoints = partial(printLastParam, points_for_test)
 printMSE = partial(printLastParam, mse)
 printSilhouette = partial(printLastParam, silhouette)
+
+
+def addSecondParameterToList(dataKey, models_dict, *params):
+    parameters = models_dict[parametersDict]
+    key = getStringKey(dataKey, *params)
+    l = models_dict[key]
+    models_dict[key] = compose(list, zip)(parameters[k_set], l)
+
+
+add_k_to_mse = partial(addSecondParameterToList, mse)
+add_k_to_silhoutte = partial(addSecondParameterToList, silhouette)
+add_k_to_ks_test = partial(addSecondParameterToList, KS_test)

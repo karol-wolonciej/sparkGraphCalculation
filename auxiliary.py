@@ -93,6 +93,15 @@ def operate_on_clustering_iniMode_maxIter_distMeasure(f, models_dict):
                           distanceMeasures)
 
 
+def operate_on_clustering_iniMode_maxIter_distMeasure_set_name(f, models_dict):
+    operate_on_parameters(f, 
+                          models_dict, 
+                          initializationMode, 
+                          maxIterations, 
+                          distanceMeasures,
+                          set_name)
+
+
 def operate_on_k_iniMode_maxIter_distMeasure(f, models_dict):
     operate_on_parameters(f, 
                           models_dict,
@@ -109,7 +118,7 @@ def getStringKey(lastDataKey, *args):
 
 def get_path_to_partial_pdf(models_dict, *args):
     folderPath = get_partial_PDFs_path(models_dict)
-    pdf_name = '_'.join([str(arg) for arg in args])
+    pdf_name = '_'.join([str(arg) for arg in args] + [pdf_extension])
     return folderPath + pdf_name
 
 

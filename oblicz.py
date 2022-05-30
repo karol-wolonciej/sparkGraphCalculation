@@ -102,9 +102,10 @@ models_dict[points_tuples_list] = { set1 : set1PointsTuplesForTest,
 
 initialize_model_dict(models_dict)
 
-operateOnAllParameters = partial(operate_on_clustering_k_iniMode_maxIter_distMeasure_setName, models_dict=models_dict)
-operateParametersOnly = partial(operate_on_clustering_k_iniMode_maxIter_distMeasure, models_dict=models_dict)
-
+operate_on_k_iniMode_maxIter_distMeasure_set_name = partial(operate_on_clustering_k_iniMode_maxIter_distMeasure_setName, models_dict=models_dict)
+operate_on_k_iniMode_maxIter_distMeasure = partial(operate_on_clustering_k_iniMode_maxIter_distMeasure, models_dict=models_dict)
+operate_on_iniMode_maxIter_distMeasure = partial(operate_on_clustering_iniMode_maxIter_distMeasure, models_dict=models_dict)
+operate_on_iniMode_maxIter_distMeasute_set_name = partial(operate_on_clustering_iniMode_maxIter_distMeasure_set_name, models_dict=models_dict)
 
 
 parametersKeywords = [k_set, initializationMode, maxIterations, distanceMeasures]
@@ -112,25 +113,27 @@ parametersSetsKeywords = parametersKeywords + [set_name]
 
 
 
-gatherMSE = partial(gatherData, mse)
-gatherSilhouette = partial(gatherData, silhouette)
-gatherClusterCenters = partial(gatherData, clusterCenters)
-gatherKStest = partial(gatherData, KS_test)
+gatherMSE = partial(gatherDataForEveryK, mse)
+gatherSilhouette = partial(gatherDataForEveryK, silhouette)
+gatherKStest = partial(gatherDataForEveryK, KS_test)
 
 
-operateOnAllParameters(createKMeansObjects)
-operateOnAllParameters(fitModels)
-operateOnAllParameters(calculatePointsForTest)
-operateOnAllParameters(calculateMeanSquareError)
-operateOnAllParameters(calculateSihouette)
-operateOnAllParameters(calculateClustersSplit)
-operateParametersOnly(calculateKStest)
-operateOnAllParameters(gatherMSE)
-operateOnAllParameters(gatherSilhouette)
-operateOnAllParameters(gatherClusterCenters)
-operateParametersOnly(gatherKStest)
+operate_on_k_iniMode_maxIter_distMeasure_set_name(createKMeansObjects)
+operate_on_k_iniMode_maxIter_distMeasure_set_name(fitModels)
+operate_on_k_iniMode_maxIter_distMeasure_set_name(calculatePointsForTest)
+operate_on_k_iniMode_maxIter_distMeasure_set_name(calculateMeanSquareError)
+operate_on_k_iniMode_maxIter_distMeasure_set_name(calculateSihouette)
+operate_on_k_iniMode_maxIter_distMeasure_set_name(calculateClustersSplit)
+operate_on_k_iniMode_maxIter_distMeasure(calculateKStest)
+operate_on_k_iniMode_maxIter_distMeasure_set_name(gatherMSE)
+operate_on_k_iniMode_maxIter_distMeasure_set_name(gatherSilhouette)
+operate_on_k_iniMode_maxIter_distMeasure(gatherKStest)
 
-operateOnAllParameters(deleteModelsAndDataframes)
+operate_on_iniMode_maxIter_distMeasute_set_name(add_k_to_mse)
+operate_on_iniMode_maxIter_distMeasute_set_name(add_k_to_silhoutte)
+operate_on_iniMode_maxIter_distMeasure(add_k_to_ks_test)
+
+operate_on_k_iniMode_maxIter_distMeasure_set_name(deleteModelsAndDataframes)
 
 
 del models_dict[sparkContext]

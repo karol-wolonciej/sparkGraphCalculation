@@ -46,5 +46,5 @@ def createSubHeaders(models_dict, iniMode, maxIter, distMeasure):
 def createSummary(summary_keyword, models_dict):
     summaryHeader = summariesDescribtion[summary_keyword] + '\n\n'
     summaryText = summaryHeader + models_dict[summary_keyword]
-    path = get_path_to_partial_pdf(models_dict, summary_keyword, pdf_extension)
+    path = get_path_to_partial_pdf(models_dict, summary_keyword)
     writeMultipleLines(txt=summaryText, path=path)

@@ -45,8 +45,8 @@ drawSilhouettePlot = partial(draw2DLinePlotsComparisionForSetsGathered, silhouet
 createRaportHeader(models_dict)
 operate_on_iniMode_maxIter_distMeasure(createSubHeaders)
 
-writeUsualLine(txt='Clustering comparision', path=parameters[partialPDFsPath] + 'clustering_comparision_header.pdf')
-writeUsualLine(txt='New points comparision', path=parameters[partialPDFsPath] + 'points_to_test_comparision_header.pdf')
+writeUsualLine(txt='Clustering comparision', path=parameters[partialPDFsPath] + clusteringComparisionHeaderPdf)
+writeUsualLine(txt='New points comparision', path=parameters[partialPDFsPath] + pointsToTestComparisionHeader)
  
 createSummary(originalSetSummary, models_dict)
 createSummary(originalSet1Summary, models_dict)

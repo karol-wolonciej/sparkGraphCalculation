@@ -15,6 +15,9 @@ def get_tile_y(models_dict):
     return dict(zip(k_list, range(len(k_list))))
 
 
+def saveFigAndClose(pdf_path):
+    plt.savefig(pdf_path)
+    plt.close()
 
 
 def plotSet2D(models_dict, pointsSet, title):
@@ -23,7 +26,7 @@ def plotSet2D(models_dict, pointsSet, title):
     plt.scatter(x, y, s=s)
     plt.title(title)
     pdf_path = get_path_to_partial_pdf(models_dict, 'original_set')
-    plt.savefig(pdf_path)
+    saveFigAndClose(pdf_path)
 
 
 def plotSubplot(plt_def, s_x, s_y, t_number):
@@ -88,7 +91,7 @@ def drawKComparisionFigure(drawSingleFigure, figureName, models_dict, iniMode, m
         for k in k_list:
             drawSingleFigure(k, iniMode, maxIter, distMeasure, set_name, models_dict)
     pdf_path = get_path_to_partial_pdf(models_dict, iniMode, maxIter, distMeasure, figureName)
-    plt.savefig(pdf_path)
+    saveFigAndClose(pdf_path)
 
 
 drawClustersComparisionFigure = partial(drawKComparisionFigure, drawClusterFigure, 'clusters')
@@ -128,7 +131,7 @@ def draw2DPlotsComparision(plotFunc, lastPlotKeys, get_xy_list, dataLastKey, mod
         setYLabel = partial(plt.ylabel, dataLastKey)
         createPlot(plotFunc, [subplot, setXLabel, setYLabel], xy_list)
     pdf_path = get_path_to_partial_pdf(models_dict, *params, 'plot_comparision', dataLastKey)
-    plt.savefig(pdf_path)
+    saveFigAndClose(pdf_path)
 
 
 draw2DLinePlotsComparision = partial(draw2DPlotsComparision, plt.plot)
@@ -148,8 +151,7 @@ def draw2DPlotKStest(models_dict, iniMode, maxIter, distMeasure):
     setYLabel = partial(plt.ylabel, KS_test)
     createPlot(plt.plot, [setTitle, setXLabel, setYLabel], xy_list)
     pdf_path = get_path_to_partial_pdf(models_dict, iniMode, maxIter, distMeasure, 'ks_plot', KS_test)
-    plt.savefig(pdf_path)
-    plt.figure(figsize=(x_plot_size, y_plot_size))
+    saveFigAndClose(pdf_path)
 
 
 def drawOriginalSubsetsComparision(models_dict):
@@ -162,4 +164,4 @@ def drawOriginalSubsetsComparision(models_dict):
         title = 'original ' + set_name
         plt.title(title)
     pdf_path = get_path_to_partial_pdf(models_dict, 'original_subsets_comparision')
-    plt.savefig(pdf_path)
+    saveFigAndClose(pdf_path)

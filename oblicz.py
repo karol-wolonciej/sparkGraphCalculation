@@ -18,7 +18,7 @@ from functools import partial
 import pickle
 import sys
 
-from plots import *
+# from plots import *
 from models_dict_calculations import *
 from keywords import *
 from KStest import ks2d2s, ks2d2s_2d_points

@@ -17,7 +17,7 @@ def getPathsForClusteringAnalysis(pathsList, models_dict, iniMode, maxIter, dist
     clustersImage = basePath + '_clusters_.pdf'
     mseImage = basePath + '_plot_comparision_mse_.pdf'
     silhoutteImage = basePath + '_plot_comparision_silhouette_.pdf'
-    pointsForTestHeaderImage = pdfs_path + points_to_test_comparision_header
+    pointsForTestHeaderImage = pdfs_path + pointsToTestComparisionHeader
     pointsForTestImage = basePath + '_points_to_test_.pdf'
     ksImage = basePath + '_ks_plot_KS_test_.pdf'
     pathsList += [clusteringHeader, 

@@ -87,8 +87,6 @@ def calculateClustersSplit(models_dict, k, iniMode, maxIter, distMeasure, set_na
 
 def gatherDataForEveryK(dataKey, models_dict, *params):
     param_dict = getParamDict(models_dict, *params)
-    print(params)
-    print(param_dict)
     key = getStringKey(dataKey, *params[1:])
     elem = param_dict[dataKey]
     addElementToDict(key, elem, models_dict)

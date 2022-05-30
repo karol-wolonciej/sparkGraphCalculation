@@ -39,8 +39,7 @@ partialPDFsPath = 'partialPDFsPath'
 clusterCenters = 'clusterCenters'
 raportDestination = 'raportDestination'
 clusteringComparisionHeaderPdf = 'clustering_comparision_header.pdf'
-points_to_test_comparision_header = 'points_to_test_comparision_header.pdf'
-
+pointsToTestComparisionHeader = 'points_to_test_comparision_header.pdf'
 
 summariesDescribtion = {
     originalSetSummary : 'Original dataset summary:',

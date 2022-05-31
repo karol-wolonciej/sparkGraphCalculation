@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from auxiliary import *
 from keywords import *
 
-s = 2
+s = 0.1
 
 green = (0, 0.75, 0)
 blue  = (0, 0, 0.75)

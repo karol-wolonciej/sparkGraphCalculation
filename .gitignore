@@ -1,0 +1,6 @@
+*.pkl
+bin/__pycache__/
+
+reports/
+sets/*/partialPDFs/
+reports/

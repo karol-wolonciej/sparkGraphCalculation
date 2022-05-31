@@ -13,12 +13,14 @@ from functionalLib import compose
 from plots import *
 from textPDFs import *
 from raport_generation import *
+import sys
+
 
 import json
 
 
 
-path_to_parameters = "/home/karol/pdd/duzeZadanie2/grafy/parameters.json"
+path_to_parameters = sys.argv[1]
 
 parameters_file = open(path_to_parameters)
 parameters = json.load(parameters_file)

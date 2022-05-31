@@ -48,8 +48,11 @@ spark.sparkContext.setLogLevel(logLevel)
 df = spark.read.text(dataset_path)
 
 td = df.rdd
+
+int_float = compose(int, float)
+
 tr_data = td.map(lambda line: line[0].split()) \
-            .map(lambda line: Row(X=int(line[0]), Y=int(line[1]))) \
+            .map(lambda line: Row(X=int_float(line[0]), Y=int_float(line[1]))) \
             .toDF().sort(X, Y) \
             .sample(withReplacement=False, fraction=ratioOfInputPoints) \
             .cache()

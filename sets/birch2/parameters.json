@@ -1,8 +1,8 @@
 {
-    "name" : "europe",
-    "datasetPath": "/home/karol/pdd/duzeZadanie2/sets/europe/europe.txt",
-    "resultDictionaryPath": "/home/karol/pdd/duzeZadanie2/sets/europe/europeDict.pkl",
-    "partialPDFsPath": "/home/karol/pdd/duzeZadanie2/sets/europe/partialPDFs/",
+    "name" : "birch2",
+    "datasetPath": "/home/karol/pdd/duzeZadanie2/sets/birch2/birch2.txt",
+    "resultDictionaryPath": "/home/karol/pdd/duzeZadanie2/sets/birch2/birch2Dict.pkl",
+    "partialPDFsPath": "/home/karol/pdd/duzeZadanie2/sets/birch2/partialPDFs/",
     "raportDestination": "/home/karol/pdd/duzeZadanie2/reports/",
 
     "logLevel": "ERROR",

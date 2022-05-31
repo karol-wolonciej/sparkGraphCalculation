@@ -1,5 +1,5 @@
 {
-    "name" : "birch3",
+    "name" : "worms_2d",
     "datasetPath": "/home/karol/pdd/duzeZadanie2/sets/worms_2d/worms_2d.txt",
     "resultDictionaryPath": "/home/karol/pdd/duzeZadanie2/sets/worms_2d/worms_2d.pkl",
     "partialPDFsPath": "/home/karol/pdd/duzeZadanie2/sets/worms_2d/partialPDFs/",

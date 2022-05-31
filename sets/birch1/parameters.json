@@ -1,7 +1,7 @@
 {
     "name" : "birch1",
     "datasetPath": "/home/karol/pdd/duzeZadanie2/sets/birch1/birch1.txt",
-    "resultDictionaryPath": "/home/karol/pdd/duzeZadanie2/sets/birch1/birch1Dict.pkl",
+    "resultDictionaryPath": "/home/karol/pdd/duzeZadanie2/sets/birch1/birch1.pkl",
     "partialPDFsPath": "/home/karol/pdd/duzeZadanie2/sets/birch1/partialPDFs/",
     "raportDestination": "/home/karol/pdd/duzeZadanie2/reports/",
 

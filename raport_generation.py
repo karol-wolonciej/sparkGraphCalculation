@@ -17,7 +17,7 @@ def getPathsForClusteringAnalysis(pathsList, models_dict, iniMode, maxIter, dist
     clustersImage = basePath + '_clusters_.pdf'
     mseImage = basePath + '_plot_comparision_mse_.pdf'
     silhoutteImage = basePath + '_plot_comparision_silhouette_.pdf'
-    pointsForTestHeaderImage = pdfs_path + pointsToTestComparisionHeader
+    pointsForTestHeaderImage = pdfs_path + pointsToTestComparisionHeaderPdf
     pointsForTestImage = basePath + '_points_to_test_.pdf'
     ksImage = basePath + '_ks_plot_KS_test_.pdf'
     pathsList += [clusteringHeader, 
@@ -34,6 +34,7 @@ def getRaportHeaderPaths(pathsList, models_dict):
     basePath = get_partial_PDFs_path(models_dict)
     raportHeader = basePath + 'raport_header.pdf'
     originalSet = basePath + 'original_set_.pdf'
+    originalSets_KS = basePath + originalSets_KS_PDF
     originalSubsetComparision = basePath + 'original_subsets_comparision_.pdf'
     originalSetSummary = basePath + 'originalSetSummary_.pdf'
     originalSet1Summary = basePath + 'originalSet1Summary_.pdf'
@@ -42,6 +43,7 @@ def getRaportHeaderPaths(pathsList, models_dict):
     transformedSet2Summary = basePath + 'transformedSet2Summary_.pdf'
     pathsList += [raportHeader, 
                   originalSet,
+                  originalSets_KS,
                   originalSubsetComparision,
                   originalSetSummary, 
                   originalSet1Summary, 

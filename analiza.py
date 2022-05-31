@@ -46,7 +46,8 @@ createRaportHeader(models_dict)
 operate_on_iniMode_maxIter_distMeasure(createSubHeaders)
 
 writeUsualLine(txt='Clustering comparision', path=parameters[partialPDFsPath] + clusteringComparisionHeaderPdf)
-writeUsualLine(txt='New points comparision', path=parameters[partialPDFsPath] + pointsToTestComparisionHeader)
+writeUsualLine(txt='New points comparision', path=parameters[partialPDFsPath] + pointsToTestComparisionHeaderPdf)
+writeUsualLine(txt='Original two sets KS: ' + str(models_dict[original_KS_test]), path=parameters[partialPDFsPath] + originalSets_KS_PDF)
  
 createSummary(originalSetSummary, models_dict)
 createSummary(originalSet1Summary, models_dict)

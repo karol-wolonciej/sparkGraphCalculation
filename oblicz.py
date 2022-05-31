@@ -34,11 +34,9 @@ parameters_file = open(path_to_parameters)
 parameters = json.load(parameters_file)
 parameters_file.close()
 
-
 models_dict = {}
 models_dict[parametersDict] = parameters
 models_dict[sparkContext] = sc
-
 
 ratioOfInputPoints = parameters[ratioOfInputPoints]
 dataset_path = parameters[dataset_path_key]
@@ -70,16 +68,12 @@ transformed_data_model = data_transformation_pipeline.fit(tr_data)
 transformed_data_set1 = transformed_data_model.transform(set1_points).cache()
 transformed_data_set2 = transformed_data_model.transform(set2_points).cache()
 
-
-
-
 models_dict[originalSetSummary] = tr_data.summary().toPandas().to_string()
 models_dict[originalSet1Summary] = set1_points.summary().toPandas().to_string()
 models_dict[originalSet2Summary] = set2_points.summary().toPandas().to_string()
 
 models_dict[transformedSet1Summary] = transformed_data_set1.summary().toPandas().to_string()
 models_dict[transformedSet2Summary] = transformed_data_set2.summary().toPandas().to_string()
-
 
 set_point_to_tuples = lambda pointsDF: [tuple([round(val, 3) for val in denseVector[0]]) for denseVector in pointsDF.select('features').collect()]
 
@@ -88,18 +82,13 @@ set2PointsTuplesForTest = set_point_to_tuples(transformed_data_set2)
 
 oryginalSetPointsTuples = set1PointsTuplesForTest + set2PointsTuplesForTest
 
-
-
-
 models_dict[original_KS_test] = ks2d2s_2d_points(set1PointsTuplesForTest, set2PointsTuplesForTest)
 models_dict[points_sets] = { set1 : transformed_data_set1, 
                              set2 : transformed_data_set2 }
 
-
 models_dict[points_tuples_list] = { set1 : set1PointsTuplesForTest, 
                                     set2 : set2PointsTuplesForTest,
                                     original_set : oryginalSetPointsTuples }
-
 
 
 
@@ -110,11 +99,8 @@ operate_on_k_iniMode_maxIter_distMeasure = partial(operate_on_clustering_k_iniMo
 operate_on_iniMode_maxIter_distMeasure = partial(operate_on_clustering_iniMode_maxIter_distMeasure, models_dict=models_dict)
 operate_on_iniMode_maxIter_distMeasute_set_name = partial(operate_on_clustering_iniMode_maxIter_distMeasure_set_name, models_dict=models_dict)
 
-
 parametersKeywords = [k_set, initializationMode, maxIterations, distanceMeasures]
 parametersSetsKeywords = parametersKeywords + [set_name]
-
-
 
 gatherMSE = partial(gatherDataForEveryK, mse)
 gatherSilhouette = partial(gatherDataForEveryK, silhouette)
@@ -138,10 +124,8 @@ operate_on_iniMode_maxIter_distMeasure(add_k_to_ks_test)
 
 operate_on_k_iniMode_maxIter_distMeasure_set_name(deleteModelsAndDataframes)
 
-
 del models_dict[sparkContext]
 del models_dict[points_sets]
-
 
 with open(resultDictionaryPath, 'wb') as f:
     pickle.dump(models_dict, f)

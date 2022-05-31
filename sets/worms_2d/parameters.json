@@ -1,0 +1,19 @@
+{
+    "name" : "birch3",
+    "datasetPath": "/home/karol/pdd/duzeZadanie2/sets/worms_2d/worms_2d.txt",
+    "resultDictionaryPath": "/home/karol/pdd/duzeZadanie2/sets/worms_2d/worms_2d.pkl",
+    "partialPDFsPath": "/home/karol/pdd/duzeZadanie2/sets/worms_2d/partialPDFs/",
+    "raportDestination": "/home/karol/pdd/duzeZadanie2/reports/",
+
+    "logLevel": "ERROR",
+    "numberOfPointsForClusterDrawing": 50000,
+    "set_name": ["set1", "set2"],
+    "k_set": [5],
+    "initializationMode": ["random"],
+    "maxIterations": [1],
+    "distanceMeasures": ["euclidean"],
+    "seed": 1,
+    "ratioOfInputPoints": 1.0,
+    "initSteps": 2,
+    "tol": 0.0001
+}

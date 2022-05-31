@@ -1,0 +1,19 @@
+{
+    "name" : "europe",
+    "datasetPath": "/home/karol/pdd/duzeZadanie2/sets/europe/europe.txt",
+    "resultDictionaryPath": "/home/karol/pdd/duzeZadanie2/sets/europe/europeDict.pkl",
+    "partialPDFsPath": "/home/karol/pdd/duzeZadanie2/sets/europe/partialPDFs/",
+    "raportDestination": "/home/karol/pdd/duzeZadanie2/reports/",
+
+    "logLevel": "ERROR",
+    "numberOfPointsForClusterDrawing": 50000,
+    "set_name": ["set1", "set2"],
+    "k_set": [5],
+    "initializationMode": ["random"],
+    "maxIterations": [1],
+    "distanceMeasures": ["euclidean"],
+    "seed": 1,
+    "ratioOfInputPoints": 1.0,
+    "initSteps": 2,
+    "tol": 0.0001
+}

@@ -1,0 +1,8 @@
+TODO:
+-zapisywac do slownika tylko pewien zbior punktow do utworzenia raportu
+-zrob wiecej workerow (12 lacznie)
+-zrob skrypt ktory uruchamia analizy i zapisuje slowniki do plikow w odpowiednim folderze
+-zrob obliczenie 2 plikow z duza iloscia parametrow
+-odpal liczenie dla duzej ilosci parametrow klastrowania
+
+    

@@ -1,0 +1,237 @@
+﻿{
+  "paragraphs": [
+    {
+      "text": "%spark.ipyspark\n\npath = '/home/karol/pdd/duzeZadanie2/grafy/yt_graph.txt'\n\ndf = spark.read.text(path)\ntd = df.rdd\n\nprint(td.count())",
+      "user": "anonymous",
+      "dateUpdated": "2022-05-30T15:06:30+0200",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1653915990017_1773011772",
+      "id": "paragraph_1653380460582_1831275638",
+      "dateCreated": "2022-05-30T15:06:30+0200",
+      "status": "READY",
+      "focus": true,
+      "$$hashKey": "object:809"
+    },
+    {
+      "text": "%spark.ipyspark\n\nedges = td.map(lambda line: line[0].split()).map(lambda line: (int(line[0]), int(line[1])))\nprint(edges.take(10))\n\nedgesMirror = edges.map(lambda edge: (edge[1], edge[0]))\nprint(edgesMirror.take(10))",
+      "user": "anonymous",
+      "dateUpdated": "2022-05-30T15:06:30+0200",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1653915990017_1809830719",
+      "id": "paragraph_1653406269829_980009785",
+      "dateCreated": "2022-05-30T15:06:30+0200",
+      "status": "READY",
+      "$$hashKey": "object:810"
+    },
+    {
+      "text": "%spark.ipyspark\n\nneighbours = dict(edges.union(edgesMirror).map(lambda edge: (edge[0], 1)).reduceByKey(lambda x,y: x+y).sortBy(lambda x: x[1]).collect())\nneighbours_broadcast = sc.broadcast(neighbours)",
+      "user": "anonymous",
+      "dateUpdated": "2022-05-30T15:06:30+0200",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1653915990018_199389455",
+      "id": "paragraph_1653914261999_478435695",
+      "dateCreated": "2022-05-30T15:06:30+0200",
+      "status": "READY",
+      "$$hashKey": "object:811"
+    },
+    {
+      "text": "%spark.ipyspark\n\ncomputedPointsRdd = edges.map(lambda edge: (neighbours_broadcast.value[edge[0]], neighbours_broadcast.value[edge[1]]))",
+      "user": "anonymous",
+      "dateUpdated": "2022-05-30T15:06:30+0200",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "editorHide": false,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1653915990018_1897017157",
+      "id": "paragraph_1653406267935_73905292",
+      "dateCreated": "2022-05-30T15:06:30+0200",
+      "status": "READY",
+      "$$hashKey": "object:812"
+    },
+    {
+      "text": "%spark.ipyspark\n\nhalf = 0.5\nset1_points_rdd = computedPointsRdd.sample(withReplacement=False, fraction=half)\nset2_points_rdd = computedPointsRdd.subtract(set1_points)",
+      "user": "anonymous",
+      "dateUpdated": "2022-05-30T15:06:30+0200",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1653915990018_872223504",
+      "id": "paragraph_1653915138238_1430000364",
+      "dateCreated": "2022-05-30T15:06:30+0200",
+      "status": "READY",
+      "$$hashKey": "object:813"
+    },
+    {
+      "text": "%spark.ipyspark\n\ncomputedPoints = computedPointsRdd.collect()",
+      "user": "anonymous",
+      "dateUpdated": "2022-05-30T15:06:30+0200",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1653915990018_1920158303",
+      "id": "paragraph_1653405382562_26194926",
+      "dateCreated": "2022-05-30T15:06:30+0200",
+      "status": "READY",
+      "$$hashKey": "object:814"
+    },
+    {
+      "text": "%spark.ipyspark\nprint(computedPoints)",
+      "user": "anonymous",
+      "dateUpdated": "2022-05-30T15:06:30+0200",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1653915990018_666775860",
+      "id": "paragraph_1653915254956_484054210",
+      "dateCreated": "2022-05-30T15:06:30+0200",
+      "status": "READY",
+      "$$hashKey": "object:815"
+    }
+  ],
+  "name": "przetworzenieGrafu",
+  "id": "2H5F235WG",
+  "defaultInterpreterGroup": "spark",
+  "version": "0.9.0",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {},
+  "config": {
+    "isZeppelinNotebookCronEnable": false,
+    "looknfeel": "default",
+    "personalizedMode": "false"
+  },
+  "info": {},
+  "path": "/przetworzenieGrafu"
+}

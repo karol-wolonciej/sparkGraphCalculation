@@ -1,0 +1,14 @@
+cache() w wielu miejscach
+RUNNING kilka aplikacji naraz bo sa odpowiednie ustawienia w spark.conf ktore na to pozwalaja
+
+trudno wygenerowac graf ktory da sensowny zbior, taki graf musialby miec duzo wiecej krawedzi niz wierzcholkow, jesli ma tylko kilka do kilkunastu razy wiecej bedzie mnostwo punktow o niewielkim x i y
+zbiory ktore otrzymalem z grafow byly malo interesujace do klastrowania zwlaszcza intermixed
+
+postanowilem postawic na inny zbior punktow ktory bedzie ciekawy zwlaszcza dla intermixed sklada sie w pewnym sensie z wielu trojwymiarowych rozkladow gaussa
+
+usuwamy duplikaty, bledne wiersze i troche outlinerow
+
+otrzymujemy wyskalowane rowne w obu wymiarach dane
+
+dzielimy na dwa zbiory
+
